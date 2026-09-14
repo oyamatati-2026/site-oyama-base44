@@ -12,10 +12,13 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root{
-    --bg:#FDFBF7; --bg-alt:#F5F0E8; --cocoa:#2D241E; --cocoa-muted:#6B5D52;
-    --order:#B8860B; --line:rgba(45,36,30,.1); --line-strong:rgba(45,36,30,.2);
+    --bg:#FDFBF7; --bg-alt:#F5F0E8; --cocoa:#3D2E22; --cocoa-muted:#7A6B5D;
+    --wheat:#D4A373; --wheat-light:#E9C89B; --wheat-dark:#A67C52; --wheat-deep:#8B5E3C;
+    --terracotta:#BF6A38;
+    --line:rgba(61,46,34,.1); --line-strong:rgba(61,46,34,.2);
     --serif:'Cormorant Garamond',Georgia,serif; --sans:'Inter',sans-serif;
     --ease:cubic-bezier(0.16,1,0.3,1);
+    --wheat-grad:linear-gradient(135deg,#E9C89B 0%,#D4A373 50%,#A67C52 100%);
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{
@@ -26,12 +29,12 @@
   }
   body::before{
     content:''; position:absolute; top:-50%; right:-20%; width:60%; height:100%;
-    background:radial-gradient(circle,rgba(184,134,11,.06),transparent 70%);
+    background:radial-gradient(circle,rgba(212,163,115,.08),transparent 70%);
     pointer-events:none;
   }
   body::after{
     content:''; position:absolute; bottom:-30%; left:-20%; width:50%; height:80%;
-    background:radial-gradient(circle,rgba(85,107,47,.05),transparent 70%);
+    background:radial-gradient(circle,rgba(191,106,56,.05),transparent 70%);
     pointer-events:none;
   }
   .login-card{
@@ -41,11 +44,12 @@
     position:relative; z-index:1;
   }
   .mark{
-    width:52px; height:52px; border-radius:50%;
-    background:linear-gradient(135deg,var(--order),var(--cocoa));
+    width:auto; height:56px; border-radius:0;
+    background:transparent;
     display:flex; align-items:center; justify-content:center;
-    font-size:1.5rem; margin-bottom:24px;
+    margin-bottom:24px;
   }
+  .mark img{height:56px;width:auto;}
   .eyebrow{font-size:.72rem; font-weight:500; text-transform:uppercase; letter-spacing:.18em; color:var(--cocoa-muted); margin-bottom:.8rem; display:block;}
   h1{font-family:var(--serif); font-size:1.8rem; font-weight:500; margin:0 0 8px; color:var(--cocoa); letter-spacing:-.01em;}
   p.sub{color:var(--cocoa-muted); margin:0 0 32px; font-size:.92rem; font-weight:300;}
@@ -60,15 +64,15 @@
   input::placeholder{color:var(--cocoa-muted); opacity:.6;}
   button{
     width:100%; padding:14px; border:none; border-radius:999px;
-    background:var(--cocoa); color:var(--bg); font-weight:600;
+    background:var(--wheat-grad); color:#fff; font-weight:600;
     font-size:.82rem; text-transform:uppercase; letter-spacing:.12em;
-    cursor:pointer; transition:all .4s var(--ease);
+    cursor:pointer; transition:all .4s var(--ease); background-size:200% auto;
   }
-  button:hover:not(:disabled){background:var(--order);}
+  button:hover:not(:disabled){background-position:right center;}
   button:disabled{opacity:.5; cursor:default;}
   .msg{font-size:.85rem; margin-top:16px; padding:12px 14px; border-radius:10px; font-weight:400;}
   .msg.err{background:rgba(180,40,40,.08); color:#9B1C46; border:.5px solid rgba(180,40,40,.15);}
-  .msg.ok{background:rgba(85,107,47,.08); color:var(--order); border:.5px solid rgba(85,107,47,.15);}
+  .msg.ok{background:rgba(166,124,82,.08); color:var(--wheat-dark); border:.5px solid rgba(166,124,82,.15);}
   .back{display:block; text-align:center; margin-top:24px; font-size:.82rem; color:var(--cocoa-muted); text-decoration:none; transition:color .3s ease;}
   .back:hover{color:var(--cocoa);}
   .divider{height:.5px; background:var(--line); margin:28px 0;}
@@ -78,7 +82,7 @@
 </head>
 <body>
   <div class="login-card">
-    <div class="mark">🔒</div>
+    <div class="mark"><img src="https://media.base44.com/images/public/6aa455885a5c91d0b076b408/e32110312_LogoTatiOyama1.png" alt="Tati & Oyama"></div>
     <span class="eyebrow">Tati & Oyama</span>
     <h1>Área administrativa</h1>
     <p class="sub">Entre com seu usuário ou e-mail para gerenciar o site.</p>

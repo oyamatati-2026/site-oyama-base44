@@ -3,31 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tati & Oyama — Bolos, doces e festas feitos com capricho</title>
-<meta name="description" content="Bolos, doces, salgados e produtos para festas e eventos feitos com capricho pela Tati & Oyama em Duartina - SP.">
-<meta property="og:title" content="Tati & Oyama">
-<meta property="og:description" content="Momentos especiais merecem sabores especiais.">
+<title>Tati & Oyama — Pães, Bolos, Doces e Salgados Artesanais em Duartina-SP</title>
+<meta name="description" content="Pães, bolos, doces e salgados artesanais feitos com capricho pela Tati & Oyama em Duartina - SP. Encomendas e pronta entrega.">
+<meta property="og:title" content="Tati & Oyama — Confeitaria Artesanal">
+<meta property="og:description" content="Pães, bolos, doces e salgados artesanais em Duartina - SP.">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A7%81%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8D%9E%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root{
     --bg:#FDFBF7;
     --bg-alt:#F5F0E8;
-    --cocoa:#2D241E;
-    --cocoa-muted:#6B5D52;
-    --ready:#556B2F;
-    --order:#B8860B;
-    --line:rgba(45,36,30,.1);
-    --line-strong:rgba(45,36,30,.2);
+    --cocoa:#3D2E22;
+    --cocoa-muted:#7A6B5D;
+    --wheat:#D4A373;
+    --wheat-light:#E9C89B;
+    --wheat-dark:#A67C52;
+    --wheat-deep:#8B5E3C;
+    --terracotta:#8B5E3C;
+    --line:rgba(61,46,34,.1);
+    --line-strong:rgba(61,46,34,.18);
     --radius:14px;
     --serif:'Cormorant Garamond',Georgia,serif;
     --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
     --ease:cubic-bezier(0.16,1,0.3,1);
-    --sombra:0 18px 40px -20px rgba(45,36,30,.25);
+    --sombra:0 18px 40px -20px rgba(61,46,34,.25);
+    --wheat-grad:linear-gradient(135deg,#E9C89B 0%,#D4A373 50%,#A67C52 100%);
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
@@ -36,205 +40,208 @@
     font-family:var(--sans); font-size:1rem; line-height:1.7;
     -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
   }
-  ::selection{background:var(--cocoa);color:var(--bg);}
+  ::selection{background:var(--wheat);color:#fff;}
   h1,h2,h3,.serif{font-family:var(--serif);font-weight:400;letter-spacing:-.01em;}
   a{color:inherit;}
   img{max-width:100%;display:block;}
   .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
   button{font-family:inherit;cursor:pointer;}
 
-  /* nav */
+  /* ===== HEADER ===== */
   header.site{position:fixed;top:0;left:0;right:0;z-index:40;transition:all .5s var(--ease);background:transparent;}
-  header.site.scrolled{background:rgba(253,251,247,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:.5px solid var(--line);}
-  .nav{display:flex;align-items:center;justify-content:space-between;padding:1.5rem 4vw;transition:padding .5s var(--ease);}
-  header.site.scrolled .nav{padding:1rem 4vw;}
-  .brand{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:500;font-size:1.4rem;color:var(--cocoa);text-decoration:none;letter-spacing:.02em;}
-  .brand .mark{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--order),var(--cocoa));display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;}
+  header.site.scrolled{background:rgba(253,251,247,.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:.5px solid var(--line);box-shadow:0 4px 20px -10px rgba(61,46,34,.1);}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 4vw;transition:padding .5s var(--ease);}
+  header.site.scrolled .nav{padding:.8rem 4vw;}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .brand .logo-img{height:42px;width:auto;transition:all .4s var(--ease);}
+  header.site.scrolled .brand .logo-img{height:38px;}
   nav.links{display:flex;gap:2.5rem;font-weight:500;font-size:.78rem;text-transform:uppercase;letter-spacing:.14em;}
-  nav.links a{text-decoration:none;color:var(--cocoa);padding:.3rem 0;position:relative;}
-  nav.links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--cocoa);transition:width .4s var(--ease);}
+  nav.links a{text-decoration:none;padding:.3rem 0;position:relative;transition:color .4s var(--ease);}
+  header.site:not(.scrolled) nav.links a{color:#fff;}
+  header.site.scrolled nav.links a{color:var(--wheat-deep);}
+  nav.links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;transition:width .4s var(--ease);}
+  header.site:not(.scrolled) nav.links a::after{background:#fff;}
+  header.site.scrolled nav.links a::after{background:var(--wheat);}
   nav.links a:hover::after{width:100%;}
   .nav-cta{display:flex;align-items:center;gap:14px;}
   .btn{display:inline-flex;align-items:center;gap:8px;padding:.9rem 1.8rem;border-radius:999px;border:none;font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.12em;text-decoration:none;transition:all .4s var(--ease);cursor:pointer;}
-  .btn-primary{background:var(--cocoa);color:var(--bg);}
-  .btn-primary:hover{background:var(--order);transform:translateY(-2px);}
-  .btn-ghost{background:transparent;color:var(--cocoa);border:.5px solid var(--cocoa);}
-  .btn-ghost:hover{background:var(--cocoa);color:var(--bg);}
+  .btn-primary{background:var(--wheat-grad);color:#fff;background-size:200% auto;box-shadow:0 8px 20px -8px rgba(164,124,82,.5);}
+  .btn-primary:hover{background-position:right center;transform:translateY(-2px);box-shadow:0 12px 28px -8px rgba(164,124,82,.6);}
+  .btn-ghost{background:transparent;border:1px solid currentColor;}
+  header.site:not(.scrolled) .btn-ghost{color:#fff;border-color:rgba(255,255,255,.6);}
+  header.site:not(.scrolled) .btn-ghost:hover{background:rgba(255,255,255,.15);}
+  header.site.scrolled .btn-ghost{color:var(--wheat-deep);border-color:var(--wheat-dark);}
+  header.site.scrolled .btn-ghost:hover{background:var(--wheat);color:#fff;border-color:var(--wheat);}
   .menu-toggle{display:none;background:none;border:none;flex-direction:column;gap:5px;padding:.5rem;}
-  .menu-toggle span{width:24px;height:1.5px;background:var(--cocoa);transition:all .3s ease;}
+  .menu-toggle span{width:24px;height:1.5px;transition:all .3s ease;}
+  header.site:not(.scrolled) .menu-toggle span{background:#fff;}
+  header.site.scrolled .menu-toggle span{background:var(--cocoa);}
 
-  /* hero */
-  .hero{position:relative;min-height:92vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 4vw 4rem;overflow:hidden;}
+  /* ===== HERO ===== */
+  .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;padding:100px 4vw 4rem;}
   .hero-bg{position:absolute;inset:0;z-index:0;}
   .hero-bg img{width:100%;height:100%;object-fit:cover;}
-  .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(45,36,30,.2) 0%,rgba(45,36,30,.05) 40%,rgba(253,251,247,.5) 80%,var(--bg) 100%);}
-  .hero-content{position:relative;z-index:2;max-width:60rem;}
-  .hero-eyebrow{display:inline-flex;align-items:center;gap:.6rem;font-size:.72rem;font-weight:500;text-transform:uppercase;letter-spacing:.18em;color:var(--cocoa);margin-bottom:1.5rem;background:rgba(253,251,247,.8);backdrop-filter:blur(8px);padding:.5rem 1rem;border-radius:999px;}
-  .hero-eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--ready);box-shadow:0 0 0 0 rgba(85,107,47,.5);animation:pulse 2.5s infinite;}
-  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(85,107,47,.5);}70%{box-shadow:0 0 0 10px rgba(85,107,47,0);}100%{box-shadow:0 0 0 0 rgba(85,107,47,0);}}
-  .hero h1{font-size:clamp(2.8rem,9vw,8rem);line-height:.88;font-weight:400;margin-bottom:1.5rem;}
-  .hero h1 em{font-style:italic;font-weight:300;color:var(--order);}
-  .hero p.lead{color:var(--cocoa-muted);font-size:1.1rem;font-weight:300;max-width:34rem;margin-bottom:2.5rem;}
-  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+  .hero-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(61,46,34,.55) 0%,rgba(61,46,34,.4) 40%,rgba(61,46,34,.55) 100%);}
+  .hero-content{position:relative;z-index:2;max-width:56rem;}
+  .hero-brand{margin-bottom:1.5rem;display:flex;justify-content:center;}
+  .hero-logo{max-height:clamp(70px,12vw,130px);width:auto;filter:drop-shadow(0 4px 24px rgba(0,0,0,.35));transition:all .4s var(--ease);}
+  .hero-tagline{display:flex;align-items:center;justify-content:center;gap:1rem;margin:1.8rem 0 1.2rem;}
+  .hero-tagline .line{width:clamp(30px,8vw,60px);height:1px;background:var(--wheat-light);}
+  .hero-tagline span.mid{font-size:.72rem;font-weight:500;text-transform:uppercase;letter-spacing:.2em;color:#fff;}
+  .hero-cats{font-family:var(--serif);font-size:clamp(1.1rem,2.2vw,1.6rem);font-weight:400;font-style:italic;color:var(--wheat-light);margin-bottom:1.5rem;letter-spacing:.02em;}
+  .hero-cats .sep{color:rgba(255,255,255,.4);margin:0 .4rem;font-style:normal;}
+  .hero p.lead{color:rgba(255,255,255,.85);font-size:1.05rem;font-weight:300;max-width:36rem;margin:0 auto 2.5rem;line-height:1.7;}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;}
+  .hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:2;color:#fff;opacity:.7;animation:bounce 2s infinite;cursor:pointer;font-size:1.5rem;}
+  @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
 
-  /* ticker */
+  /* ===== TICKER ===== */
   .ticker{border-top:.5px solid var(--line);border-bottom:.5px solid var(--line);overflow:hidden;padding:.8rem 0;background:var(--bg);}
   .ticker-track{display:flex;gap:3rem;white-space:nowrap;animation:scroll 40s linear infinite;font-size:.75rem;font-weight:500;text-transform:uppercase;letter-spacing:.14em;color:var(--cocoa-muted);}
   .ticker-track span{display:inline-flex;align-items:center;gap:.5rem;}
-  .ticker-track .dot-g{width:6px;height:6px;border-radius:50%;background:var(--ready);}
-  .ticker-track .dot-o{width:6px;height:6px;border-radius:50%;background:var(--order);}
+  .ticker-track .dot-g{width:6px;height:6px;border-radius:50%;background:var(--wheat-dark);}
+  .ticker-track .dot-o{width:6px;height:6px;border-radius:50%;background:var(--wheat-deep);}
   @keyframes scroll{to{transform:translateX(-50%);}}
 
-  /* sections */
+  /* ===== SECTIONS ===== */
   section.block{padding:6rem 0;}
-  .section-label{display:inline-flex;align-items:center;gap:.6rem;font-size:.72rem;font-weight:500;text-transform:uppercase;letter-spacing:.18em;color:var(--cocoa-muted);margin-bottom:1.5rem;}
-  .section-label::before{content:'';width:2rem;height:.5px;background:var(--cocoa-muted);}
+  .section-label{display:inline-flex;align-items:center;gap:.6rem;font-size:.72rem;font-weight:500;text-transform:uppercase;letter-spacing:.18em;color:var(--wheat-deep);margin-bottom:1.5rem;}
+  .section-label::before{content:'';width:2rem;height:1px;background:var(--wheat);}
   .block-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3rem;gap:20px;flex-wrap:wrap;}
   .block-head h2{font-size:clamp(2.2rem,5vw,4rem);line-height:1;color:var(--cocoa);}
-  .block-head h2 em{font-style:italic;font-weight:300;color:var(--order);}
+  .block-head h2 em{font-style:italic;font-weight:300;color:var(--wheat-dark);}
   .block-head p{color:var(--cocoa-muted);margin:.8rem 0 0;max-width:42ch;font-weight:300;}
 
-  /* categories */
+  /* ===== CATEGORIES NAV ===== */
   .cats{padding:2rem 0 .5rem;}
   .cats-scroll{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin;}
-  .cat-pill{flex:0 0 auto;padding:.6rem 1.4rem;border-radius:999px;background:transparent;border:.5px solid var(--line-strong);font-weight:500;font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;color:var(--cocoa-muted);white-space:nowrap;text-decoration:none;transition:all .3s ease;}
-  .cat-pill.active,.cat-pill:hover{background:var(--cocoa);color:var(--bg);border-color:var(--cocoa);}
+  .cat-pill{flex:0 0 auto;padding:.6rem 1.4rem;border-radius:999px;background:transparent;border:1px solid var(--line-strong);font-weight:500;font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;color:var(--cocoa-muted);white-space:nowrap;text-decoration:none;transition:all .3s ease;}
+  .cat-pill.active,.cat-pill:hover{background:var(--wheat-grad);color:#fff;border-color:transparent;}
 
-  /* product grid */
+  /* ===== PRODUCT GRID ===== */
   .grid-products{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:2.5rem 1.5rem;}
   .product-card{background:transparent;display:flex;flex-direction:column;}
-  .product-image-wrap{position:relative;width:100%;aspect-ratio:4/5;overflow:hidden;background:var(--bg-alt);margin-bottom:1.2rem;}
-  .product-image-wrap img{width:100%;height:100%;object-fit:cover;filter:grayscale(10%);transition:filter .6s ease,transform 1s var(--ease);}
+  .product-image-wrap{position:relative;width:100%;aspect-ratio:4/5;overflow:hidden;background:var(--bg-alt);margin-bottom:1.2rem;border-radius:4px;}
+  .product-image-wrap img{width:100%;height:100%;object-fit:cover;filter:grayscale(5%);transition:filter .6s ease,transform 1s var(--ease);}
   .product-card:hover .product-image-wrap img{filter:grayscale(0%);transform:scale(1.04);}
-  .product-image-wrap .ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;background:linear-gradient(135deg,var(--bg-alt),var(--bg));}
+  .product-image-wrap .ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;background:var(--wheat-grad);}
   .tag-badge{position:absolute;top:.8rem;left:.8rem;display:inline-flex;align-items:center;gap:.4rem;font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;padding:.4rem .75rem;border-radius:999px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
   .tag-badge .dot{width:5px;height:5px;border-radius:50%;background:#fff;}
-  .tag-ready{background:rgba(85,107,47,.92);color:#fff;}
-  .tag-order{background:rgba(184,134,11,.92);color:#fff;}
-  .tag-off{background:rgba(45,36,30,.85);color:#fff;}
-  .stock-badge{position:absolute;bottom:.8rem;right:.8rem;font-size:.68rem;font-weight:500;color:var(--bg);background:rgba(45,36,30,.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:.3rem .65rem;border-radius:999px;}
+  .tag-ready{background:rgba(166,124,82,.92);color:#fff;}
+  .tag-order{background:rgba(139,94,60,.92);color:#fff;}
+  .tag-off{background:rgba(61,46,34,.85);color:#fff;}
+  .stock-badge{position:absolute;bottom:.8rem;right:.8rem;font-size:.68rem;font-weight:500;color:var(--bg);background:rgba(61,46,34,.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:.3rem .65rem;border-radius:999px;}
   .product-info{display:flex;flex-direction:column;gap:.4rem;}
   .product-info h3{font-size:1.4rem;font-weight:500;line-height:1.1;color:var(--cocoa);}
   .product-info .desc{color:var(--cocoa-muted);font-size:.88rem;font-weight:300;min-height:2.4em;}
-  .product-row{display:flex;align-items:center;justify-content:space-between;margin-top:.6rem;padding-top:.6rem;border-top:.5px solid var(--line);}
+  .product-row{display:flex;align-items:center;justify-content:space-between;margin-top:.6rem;padding-top:.6rem;border-top:1px solid var(--line);}
   .price{font-weight:500;color:var(--cocoa);font-size:1.3rem;font-family:var(--serif);}
-  .add-btn{background:var(--cocoa);color:var(--bg);border:none;border-radius:50%;width:38px;height:38px;font-size:1.3rem;line-height:1;display:flex;align-items:center;justify-content:center;transition:all .3s ease;}
-  .add-btn:hover{background:var(--order);}
-  .add-btn:disabled{background:#d8c9ce;cursor:not-allowed;}
+  .add-btn{background:var(--wheat-grad);color:#fff;border:none;border-radius:50%;width:38px;height:38px;font-size:1.3rem;line-height:1;display:flex;align-items:center;justify-content:center;transition:all .3s ease;background-size:200% auto;}
+  .add-btn:hover{background-position:right center;transform:scale(1.1);}
+  .add-btn:disabled{background:#d8c9ce;cursor:not-allowed;transform:none;}
 
-  /* category section title */
   .cat-section{margin-bottom:3.5rem;scroll-margin-top:100px;}
   .cat-section h3.serif{color:var(--cocoa);font-size:1.6rem;margin-bottom:1.5rem;font-weight:500;}
 
-  /* about / intro */
+  /* ===== INTRO ===== */
   .intro{padding:6rem 0;}
   .intro-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:4rem;align-items:start;}
   .intro h2{font-size:clamp(2.2rem,4.5vw,3.5rem);line-height:1;}
-  .intro h2 em{font-style:italic;font-weight:300;color:var(--order);}
+  .intro h2 em{font-style:italic;font-weight:300;color:var(--wheat-dark);}
   .intro-text p{font-size:1.1rem;font-weight:300;line-height:1.8;margin-bottom:1.2rem;color:var(--cocoa);}
   .intro-text p:last-child{color:var(--cocoa-muted);}
 
-  /* manifesto / visão e valores */
-  .manifesto{padding:7rem 0;background:var(--bg-alt);border-top:.5px solid var(--line);border-bottom:.5px solid var(--line);}
+  /* ===== MANIFESTO / VISÃO ===== */
+  .manifesto{padding:7rem 0;background:var(--bg-alt);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
   .manifesto h2{font-size:clamp(2.5rem,6vw,5rem);line-height:.95;margin-bottom:3.5rem;max-width:46rem;}
-  .manifesto h2 em{font-style:italic;font-weight:300;}
+  .manifesto h2 em{font-style:italic;font-weight:300;color:var(--wheat-dark);}
   .values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem;margin-bottom:3.5rem;}
-  .value-item{border-top:.5px solid var(--line-strong);padding-top:1.5rem;}
-  .value-item .num{font-family:var(--serif);font-size:.85rem;color:var(--order);margin-bottom:.8rem;display:block;}
+  .value-item{border-top:1px solid var(--line-strong);padding-top:1.5rem;}
+  .value-item .num{font-family:var(--serif);font-size:.85rem;color:var(--wheat-deep);margin-bottom:.8rem;display:block;}
   .value-item h3{font-size:1.6rem;font-weight:500;margin-bottom:.6rem;}
   .value-item p{font-size:.92rem;color:var(--cocoa-muted);font-weight:300;line-height:1.7;}
-  .manifesto-quote{max-width:46rem;border-left:.5px solid var(--order);padding-left:2rem;}
+  .manifesto-quote{max-width:46rem;border-left:2px solid var(--wheat);padding-left:2rem;}
   .manifesto-quote p{font-family:var(--serif);font-size:clamp(1.3rem,2.5vw,1.9rem);font-style:italic;font-weight:300;line-height:1.4;}
   .manifesto-quote .author{font-family:var(--sans);font-size:.75rem;text-transform:uppercase;letter-spacing:.14em;color:var(--cocoa-muted);margin-top:1rem;font-style:normal;font-weight:500;}
 
-  /* artisan */
-  .artisan{padding:7rem 0;}
-  .artisan-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
-  .artisan-img{aspect-ratio:3/2;overflow:hidden;}
-  .artisan-img img{width:100%;height:100%;object-fit:cover;}
-  .artisan-text h2{font-size:clamp(2.2rem,4.5vw,3.5rem);line-height:1;margin-bottom:1.5rem;}
-  .artisan-text h2 em{font-style:italic;font-weight:300;color:var(--order);}
-  .artisan-text p{font-size:1.05rem;font-weight:300;line-height:1.8;color:var(--cocoa-muted);margin-bottom:1.2rem;}
-  .artisan-stats{display:flex;gap:2.5rem;margin-top:2rem;padding-top:1.5rem;border-top:.5px solid var(--line);}
-  .artisan-stat .num{font-family:var(--serif);font-size:2.2rem;font-weight:500;display:block;line-height:1;}
-  .artisan-stat .label{font-size:.7rem;text-transform:uppercase;letter-spacing:.12em;color:var(--cocoa-muted);margin-top:.4rem;}
+  /* ===== FESTAS ===== */
+  .festas-section{padding:6rem 0;border-top:1px solid var(--line);}
 
-  /* festas */
-  .festas-section{padding:6rem 0;border-top:.5px solid var(--line);}
-
-  /* logistics / FAQ */
+  /* ===== LOGISTICS / FAQ ===== */
   .logistics{background:var(--cocoa);color:var(--bg);padding:7rem 0;}
   .logistics .wrap{max-width:60rem;}
   .logistics .section-label{color:rgba(253,251,247,.5);}
   .logistics .section-label::before{background:rgba(253,251,247,.4);}
   .logistics h2{font-size:clamp(2.2rem,5vw,4rem);line-height:1;margin-bottom:3rem;}
-  .logistics h2 em{font-style:italic;font-weight:300;color:var(--order);}
-  .location-card{display:flex;align-items:center;gap:1rem;padding:1.5rem;border:.5px solid rgba(253,251,247,.15);border-radius:var(--radius);margin-bottom:3rem;background:rgba(253,251,247,.03);}
-  .location-icon{width:48px;height:48px;border-radius:50%;border:.5px solid rgba(253,251,247,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--bg);}
+  .logistics h2 em{font-style:italic;font-weight:300;color:var(--wheat);}
+  .location-card{display:flex;align-items:center;gap:1rem;padding:1.5rem;border:1px solid rgba(253,251,247,.15);border-radius:var(--radius);margin-bottom:3rem;background:rgba(253,251,247,.03);}
+  .location-icon{width:48px;height:48px;border-radius:50%;border:1px solid rgba(253,251,247,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--bg);}
   .location-card h4{font-family:var(--serif);font-size:1.4rem;font-weight:500;margin-bottom:.2rem;}
   .location-card p{font-size:.9rem;color:rgba(253,251,247,.6);font-weight:300;}
-  .faq-item{border-bottom:.5px solid rgba(253,251,247,.12);}
+  .faq-item{border-bottom:1px solid rgba(253,251,247,.12);}
   .faq-question{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0;cursor:pointer;gap:1.5rem;}
   .faq-question h3{font-family:var(--serif);font-size:clamp(1.2rem,2.2vw,1.7rem);font-weight:400;line-height:1.2;}
-  .faq-icon{flex-shrink:0;width:34px;height:34px;border:.5px solid rgba(253,251,247,.25);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .4s var(--ease);position:relative;}
+  .faq-icon{flex-shrink:0;width:34px;height:34px;border:1px solid rgba(253,251,247,.25);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .4s var(--ease);position:relative;}
   .faq-icon::before,.faq-icon::after{content:'';position:absolute;background:var(--bg);transition:transform .4s var(--ease);}
   .faq-icon::before{width:12px;height:1px;}
   .faq-icon::after{width:1px;height:12px;}
-  .faq-item.open .faq-icon{background:var(--order);border-color:var(--order);}
+  .faq-item.open .faq-icon{background:var(--wheat);border-color:var(--wheat);}
   .faq-item.open .faq-icon::after{transform:rotate(90deg);opacity:0;}
   .faq-answer{max-height:0;overflow:hidden;transition:max-height .5s var(--ease);}
   .faq-answer-inner{padding-bottom:1.5rem;font-size:1rem;font-weight:300;line-height:1.8;color:rgba(253,251,247,.7);max-width:44rem;}
   .faq-answer-inner strong{color:var(--bg);font-weight:500;}
 
-  /* CTA */
+  /* ===== CTA ===== */
   .cta-section{padding:7rem 0;text-align:center;}
   .cta-section .wrap{max-width:50rem;}
   .cta-section h2{font-size:clamp(2.2rem,5vw,4rem);line-height:1;margin-bottom:1.5rem;}
-  .cta-section h2 em{font-style:italic;font-weight:300;color:var(--order);}
+  .cta-section h2 em{font-style:italic;font-weight:300;color:var(--wheat-dark);}
   .cta-section p{font-size:1.1rem;font-weight:300;color:var(--cocoa-muted);margin-bottom:2.5rem;}
 
-  /* footer */
+  /* ===== FOOTER ===== */
   footer{background:var(--cocoa);color:var(--bg);padding:5rem 0 2.5rem;}
   .foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:2.5rem;margin-bottom:3rem;}
+  .footer-logo{margin-bottom:1.2rem;}
+  .footer-logo img{height:60px;width:auto;}
   footer h4{font-family:var(--serif);font-size:1.3rem;font-weight:500;margin-bottom:1rem;}
   footer p{color:rgba(253,251,247,.6);font-size:.9rem;font-weight:300;}
   .foot-links{list-style:none;display:grid;gap:.6rem;}
   .foot-links a{text-decoration:none;color:rgba(253,251,247,.6);font-size:.9rem;font-weight:300;transition:color .3s ease;}
-  .foot-links a:hover{color:var(--bg);}
-  .foot-bottom{border-top:.5px solid rgba(253,251,247,.15);padding-top:1.5rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:.78rem;color:rgba(253,251,247,.5);}
-  .foot-bottom a{color:var(--bg);font-weight:500;text-decoration:none;}
+  .foot-links a:hover{color:var(--wheat-light);}
+  .foot-bottom{border-top:1px solid rgba(253,251,247,.15);padding-top:1.5rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:.78rem;color:rgba(253,251,247,.5);}
+  .foot-bottom a{color:var(--wheat-light);font-weight:500;text-decoration:none;}
 
-  /* floats */
+  /* ===== FLOATS ===== */
   .wa-float{position:fixed;right:20px;bottom:20px;z-index:50;background:#25D366;color:#fff;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(37,211,102,.3);text-decoration:none;transition:transform .3s var(--ease);}
   .wa-float:hover{transform:scale(1.1);}
   .wa-float svg{width:28px;height:28px;fill:#fff;}
-  .cart-float{position:fixed;right:20px;bottom:88px;z-index:50;background:var(--cocoa);color:var(--bg);width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:var(--sombra);font-size:1.4rem;border:none;transition:transform .3s var(--ease);}
-  .cart-float:hover{transform:scale(1.1);background:var(--order);}
-  .cart-count{position:absolute;top:-4px;right:-4px;background:var(--order);color:#fff;font-size:.68rem;font-weight:700;border-radius:999px;min-width:20px;height:20px;display:flex;align-items:center;justify-content:center;padding:0 4px;}
+  .cart-float{position:fixed;right:20px;bottom:88px;z-index:50;background:var(--wheat-grad);color:#fff;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:var(--sombra);font-size:1.4rem;border:none;transition:transform .3s var(--ease);background-size:200% auto;}
+  .cart-float:hover{transform:scale(1.1);background-position:right center;}
+  .cart-count{position:absolute;top:-4px;right:-4px;background:var(--wheat-deep);color:#fff;font-size:.68rem;font-weight:700;border-radius:999px;min-width:20px;height:20px;display:flex;align-items:center;justify-content:center;padding:0 4px;}
 
-  /* cart drawer */
-  .overlay{position:fixed;inset:0;background:rgba(45,36,30,.45);z-index:60;display:none;}
+  /* ===== CART DRAWER ===== */
+  .overlay{position:fixed;inset:0;background:rgba(61,46,34,.45);z-index:60;display:none;}
   .overlay.open{display:block;}
   .drawer{position:fixed;top:0;right:0;height:100%;width:min(440px,92vw);background:var(--bg);z-index:61;transform:translateX(100%);transition:transform .3s var(--ease);display:flex;flex-direction:column;}
   .drawer.open{transform:translateX(0);}
-  .drawer-head{padding:1.5rem 1.5rem 1rem;border-bottom:.5px solid var(--line);display:flex;justify-content:space-between;align-items:center;}
+  .drawer-head{padding:1.5rem 1.5rem 1rem;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;}
   .drawer-head h3{font-family:var(--serif);font-size:1.5rem;font-weight:500;color:var(--cocoa);}
   .drawer-close{background:none;border:none;font-size:1.3rem;color:var(--cocoa-muted);cursor:pointer;}
   .drawer-body{padding:1rem 1.5rem;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:1rem;}
   .empty-cart{color:var(--cocoa-muted);font-size:.92rem;text-align:center;padding:3rem 0;font-weight:300;}
-  .cart-item{display:flex;gap:12px;border-bottom:.5px dashed var(--line);padding-bottom:12px;}
+  .cart-item{display:flex;gap:12px;border-bottom:1px dashed var(--line);padding-bottom:12px;}
   .cart-item img{width:56px;height:56px;border-radius:10px;object-fit:cover;background:var(--bg-alt);}
   .cart-item .info{flex:1;}
   .cart-item .info b{color:var(--cocoa);font-size:.92rem;font-weight:600;}
   .qty{display:flex;align-items:center;gap:8px;margin-top:6px;}
-  .qty button{width:26px;height:26px;border-radius:50%;border:.5px solid var(--line-strong);background:transparent;font-weight:600;cursor:pointer;color:var(--cocoa);}
+  .qty button{width:26px;height:26px;border-radius:50%;border:1px solid var(--line-strong);background:transparent;font-weight:600;cursor:pointer;color:var(--cocoa);}
   .rm{background:none;border:none;color:var(--cocoa-muted);font-size:.75rem;text-decoration:underline;cursor:pointer;}
-  .drawer-body input,.drawer-body textarea{width:100%;padding:10px 12px;border-radius:10px;border:.5px solid var(--line-strong);font-family:inherit;font-size:.9rem;background:transparent;color:var(--cocoa);}
-  .drawer-body input:focus,.drawer-body textarea:focus{outline:none;border-color:var(--cocoa);}
+  .drawer-body input,.drawer-body textarea{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line-strong);font-family:inherit;font-size:.9rem;background:transparent;color:var(--cocoa);}
+  .drawer-body input:focus,.drawer-body textarea:focus{outline:none;border-color:var(--wheat);}
   .drawer-body label{font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--cocoa-muted);display:block;margin-bottom:4px;}
-  .drawer-foot{padding:1.5rem;border-top:.5px solid var(--line);display:none;}
+  .drawer-foot{padding:1.5rem;border-top:1px solid var(--line);display:none;}
 
-  /* reveal */
+  /* ===== REVEAL ===== */
   .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s var(--ease),transform .8s var(--ease);}
   .reveal.visible{opacity:1;transform:translateY(0);}
 
@@ -246,10 +253,12 @@
   @media(max-width:768px){
     nav.links{display:none;}
     nav.links.open{display:flex;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);flex-direction:column;justify-content:center;align-items:center;gap:2rem;z-index:99;font-size:1.2rem;}
+    nav.links.open a{color:var(--cocoa)!important;}
     .menu-toggle{display:flex;z-index:101;}
     .nav-cta .btn-ghost{display:none;}
     .foot-grid{grid-template-columns:1fr;}
     .foot-bottom{flex-direction:column;text-align:center;}
+    .hero{min-height:90vh;}
   }
 </style>
 </head>
@@ -257,11 +266,14 @@
 
 <header class="site" id="siteHeader">
   <div class="wrap nav">
-    <a href="#topo" class="brand"><span class="mark">🧁</span><span id="brandName">Tati & Oyama</span></a>
+    <a href="#topo" class="brand">
+      <img id="headerLogo" class="logo-img" src="https://media.base44.com/images/public/6aa455885a5c91d0b076b408/e32110312_LogoTatiOyama1.png" alt="Tati & Oyama">
+    </a>
     <nav class="links" id="navLinks">
       <a href="#cardapio">Cardápio</a>
+      <a href="#paes">Pães</a>
       <a href="#manifesto">Visão</a>
-      <a href="#festas">Festas & Eventos</a>
+      <a href="#festas">Festas</a>
       <a href="#logistics">Atendimento</a>
     </nav>
     <div class="nav-cta">
@@ -275,17 +287,28 @@
 <main id="topo">
   <section class="hero">
     <div class="hero-bg">
-      <img id="heroImg" src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1600&q=80" alt="Bolo Tati & Oyama">
+      <img id="heroImg" src="https://media.base44.com/images/public/6aa455885a5c91d0b076b408/1a3f3f1f7_ChatGPTImage14desetde202611_56_04.png" alt="Tati & Oyama — Confeitaria Artesanal">
     </div>
+    <div class="hero-overlay"></div>
     <div class="hero-content">
-      <span class="hero-eyebrow"><span class="dot"></span> Produção ativa</span>
-      <h1 id="heroText">Momentos especiais merecem <em>sabores especiais.</em></h1>
-      <p class="lead">Cada receita da Tati & Oyama nasce com capricho, ingredientes selecionados e o cuidado de quem prepara para pessoas que ama. Peça pelo site e receba tudo combinado no seu WhatsApp.</p>
+      <div class="hero-brand">
+        <img id="heroLogo" class="hero-logo" src="https://media.base44.com/images/public/6aa455885a5c91d0b076b408/e32110312_LogoTatiOyama1.png" alt="Tati & Oyama">
+      </div>
+      <div class="hero-tagline">
+        <span class="line"></span>
+        <span class="mid">Confeitaria Artesanal</span>
+        <span class="line"></span>
+      </div>
+      <div class="hero-cats">
+        Pães <span class="sep">·</span> Salgados <span class="sep">·</span> Bolos <span class="sep">·</span> Doces
+      </div>
+      <p class="lead">Cada receita nasce com capricho, ingredientes selecionados e o cuidado de quem prepara para pessoas que ama. Peça pelo site e receba tudo combinado no seu WhatsApp.</p>
       <div class="hero-actions">
         <button class="btn btn-primary" onclick="openCart()">🛒 Monte seu pedido</button>
         <a href="#cardapio" class="btn btn-ghost">Conhecer o cardápio</a>
       </div>
     </div>
+    <a href="#intro" class="hero-scroll" aria-label="Rolar para baixo">↓</a>
   </section>
 
   <div class="ticker">
@@ -294,32 +317,72 @@
       <span><span class="dot-o"></span> Encomendas com 48h de antecedência</span>
       <span><span class="dot-g"></span> Retirada em Duartina — SP</span>
       <span><span class="dot-o"></span> Entrega mediante pedido mínimo</span>
-      <span><span class="dot-g"></span> Produção artesanal</span>
-      <span><span class="dot-o"></span> Ingredientes selecionados</span>
+      <span><span class="dot-g"></span> Pães de fermentação natural</span>
+      <span><span class="dot-o"></span> Produção artesanal</span>
       <span><span class="dot-g"></span> Pronta Entrega disponível</span>
       <span><span class="dot-o"></span> Encomendas com 48h de antecedência</span>
       <span><span class="dot-g"></span> Retirada em Duartina — SP</span>
       <span><span class="dot-o"></span> Entrega mediante pedido mínimo</span>
-      <span><span class="dot-g"></span> Produção artesanal</span>
-      <span><span class="dot-o"></span> Ingredientes selecionados</span>
+      <span><span class="dot-g"></span> Pães de fermentação natural</span>
+      <span><span class="dot-o"></span> Produção artesanal</span>
     </div>
   </div>
 
-  <section class="intro wrap">
+  <section class="intro wrap" id="intro">
     <div class="intro-grid">
       <div class="reveal">
-        <span class="section-label">O Ateliê</span>
+        <span class="section-label">Nossa Essência</span>
         <h2>Onde a <em>confeitaria</em> vira memória.</h2>
       </div>
       <div class="intro-text reveal">
-        <p>Nascida no coração de Duartina, a Tati & Oyama é um ateliê de confeitaria que rejeita atalhos. Trabalhamos em pequenos lotes, com ingredientes de verdade e o cuidado de quem prepara para pessoas que ama.</p>
-        <p>Cada bolo, doce ou salgado que sai da nossa cozinha carrega uma convicção simples: a de que comer bem é um ato de afeto — e que cada mordida merece ser memorável.</p>
+        <p>Nascida no coração de Duartina, a Tati & Oyama é uma confeitaria e panificação artesanal que rejeita atalhos. Trabalhamos em pequenos lotes, com ingredientes de verdade e o cuidado de quem prepara para pessoas que ama.</p>
+        <p>Do pão de fermentação natural ao bolo de festa, cada criação carrega uma convicção simples: a de que comer bem é um ato de afeto — e que cada mordida merece ser memorável.</p>
       </div>
     </div>
   </section>
 
   <section class="cats wrap">
     <div class="cats-scroll" id="catNav"></div>
+  </section>
+
+  <section class="block wrap" id="paes">
+    <div class="block-head reveal">
+      <div>
+        <span class="section-label">Pães Artesanais</span>
+        <h2>Pães da <em>Casa</em></h2>
+        <p>Pães fresquinhos de fermentação natural, produzidos artesanalmente em pequenos lotes. Disponíveis sob encomenda — peça com 24h de antecedência.</p>
+      </div>
+    </div>
+    <div class="grid-products" id="paesGrid">
+      <div class="product-card">
+        <div class="product-image-wrap">
+          <span class="tag-badge tag-order"><span class="dot"></span> Sob Encomenda</span>
+          <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80" alt="Pão de Fermentação Natural" loading="lazy">
+        </div>
+        <div class="product-info">
+          <h3>Pão de Fermentação Natural</h3>
+          <div class="desc">Pão rústico de fermentação natural, casca crocante e miolo macio. Feito com farinha selecionada e 24h de fermentação lenta.</div>
+          <div class="product-row">
+            <span class="price">R$ 18,00</span>
+            <button class="add-btn" onclick="addStaticBread('Pão de Fermentação Natural', 18, 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=400&q=80')">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-image-wrap">
+          <span class="tag-badge tag-order"><span class="dot"></span> Sob Encomenda</span>
+          <img src="https://images.unsplash.com/photo-1555507036-ab1f40486037?auto=format&fit=crop&w=800&q=80" alt="Pão de Leite" loading="lazy">
+        </div>
+        <div class="product-info">
+          <h3>Pão de Leite</h3>
+          <div class="desc">Pão de leite macio e levemente adocicado, perfeito para o café da manhã ou lanche da tarde. Rende aproximadamente 8 fatias.</div>
+          <div class="product-row">
+            <span class="price">R$ 15,00</span>
+            <button class="add-btn" onclick="addStaticBread('Pão de Leite', 15, 'https://images.unsplash.com/photo-1555507036-ab1f40486037?auto=format&fit=crop&w=400&q=80')">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="block wrap" id="cardapio">
@@ -406,7 +469,7 @@
         </div>
         <div class="faq-answer">
           <div class="faq-answer-inner">
-            Os produtos de <strong>pronta entrega</strong> já estão prontos no nosso ateliê e podem ser retirados ou entregues no mesmo dia, sujeitos à quantidade disponível em estoque. Os produtos <strong>sob encomenda</strong> são preparados especialmente para você, com antecedência mínima que varia conforme a complexidade da criação — geralmente entre 48h e 5 dias.
+            Os produtos de <strong>pronta entrega</strong> já estão prontos na nossa confeitaria e podem ser retirados ou entregues no mesmo dia, sujeitos à quantidade disponível em estoque. Os produtos <strong>sob encomenda</strong> são preparados especialmente para você, com antecedência mínima que varia conforme a complexidade da criação — geralmente entre 48h e 5 dias.
           </div>
         </div>
       </div>
@@ -465,8 +528,10 @@
 <footer>
   <div class="wrap foot-grid">
     <div>
-      <h4 id="footBrand">Tati & Oyama</h4>
-      <p>Bolos, doces, salgados e produtos para festas e eventos feitos com capricho em Duartina — SP.</p>
+      <div class="footer-logo">
+        <img id="footerLogo" src="https://media.base44.com/images/public/6aa455885a5c91d0b076b408/e32110312_LogoTatiOyama1.png" alt="Tati & Oyama">
+      </div>
+      <p id="footDesc">Pães, bolos, doces e salgados artesanais feitos com capricho em Duartina — SP.</p>
       <p id="footHorario" style="margin-top:.6rem"></p>
     </div>
     <div>
@@ -477,6 +542,7 @@
       <h4>Navegação</h4>
       <ul class="foot-links">
         <li><a href="#cardapio">Cardápio</a></li>
+        <li><a href="#paes">Pães</a></li>
         <li><a href="#manifesto">Visão & Valores</a></li>
         <li><a href="#festas">Festas & Eventos</a></li>
         <li><a href="#logistics">Atendimento</a></li>
@@ -490,7 +556,7 @@
     </div>
   </div>
   <div class="wrap foot-bottom">
-    <span>© <span id="anoAtual"></span> Tati & Oyama. Todos os direitos reservados.</span>
+    <span>© <span id="anoAtual"></span> <span id="footBrand">Tati & Oyama</span>. Todos os direitos reservados.</span>
     <span>Desenvolvido por <a href="https://serftecnologia.com.br" target="_blank" rel="noopener">Serf Tecnologia</a></span>
   </div>
 </footer>
@@ -525,6 +591,9 @@ const SUPABASE_URL = "https://muyafaecbftctxvwxpyy.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_efNcP5ircj5xCyEPnGilZg_a9EbNBlQ";
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+const DEFAULT_HERO_IMG = "https://media.base44.com/images/public/6aa455885a5c91d0b076b408/1a3f3f1f7_ChatGPTImage14desetde202611_56_04.png";
+const DEFAULT_LOGO = "https://media.base44.com/images/public/6aa455885a5c91d0b076b408/e32110312_LogoTatiOyama1.png";
+
 document.getElementById('anoAtual').textContent = new Date().getFullYear();
 
 let SETTINGS = {};
@@ -536,7 +605,7 @@ let cart = [];
 const money = v => (Number(v)||0).toLocaleString('pt-BR',{style:'currency', currency:'BRL'});
 
 function placeholderThumb(seed){
-  const emojis = ['🍰','🧁','🍬','🍡','🎉'];
+  const emojis = ['🍰','🧁','🍬','🍡','🎉','🍞'];
   const e = emojis[Math.abs(hash(seed))%emojis.length];
   return `<div class="ph">${e}</div>`;
 }
@@ -566,15 +635,44 @@ async function loadSite(){
 function applyTheme(){
   const root = document.documentElement.style;
   if(SETTINGS.primary_color) root.setProperty('--cocoa', SETTINGS.primary_color);
-  if(SETTINGS.accent_color) root.setProperty('--order', SETTINGS.accent_color);
+  if(SETTINGS.accent_color) root.setProperty('--wheat', SETTINGS.accent_color);
   if(SETTINGS.background_color) document.body.style.background = SETTINGS.background_color;
   if(SETTINGS.site_name){
-    document.title = SETTINGS.site_name + ' — Bolos, doces e festas feitos com capricho';
-    document.getElementById('brandName').textContent = SETTINGS.site_name;
+    document.title = SETTINGS.site_name + ' — Pães, Bolos, Doces e Salgados Artesanais';
     document.getElementById('footBrand').textContent = SETTINGS.site_name;
+    document.getElementById('footDesc').textContent = (SETTINGS.site_description || 'Pães, bolos, doces e salgados artesanais feitos com capricho em Duartina — SP.');
   }
-  if(SETTINGS.hero_text) document.getElementById('heroText').textContent = SETTINGS.hero_text;
+  if(SETTINGS.hero_text) document.querySelector('.hero p.lead').textContent = SETTINGS.hero_text;
   if(SETTINGS.horario_atendimento) document.getElementById('footHorario').textContent = 'Atendimento: ' + SETTINGS.horario_atendimento;
+
+  /* === IMAGEM DO HERO === */
+  if(SETTINGS.hero_image_url){
+    document.getElementById('heroImg').src = SETTINGS.hero_image_url;
+  }
+
+  /* === LOGOS — aplicadas em header, hero e footer === */
+  const headerLogo = document.getElementById('headerLogo');
+  const footerLogo = document.getElementById('footerLogo');
+  const heroLogo = document.getElementById('heroLogo');
+
+  /* Logo colorida (fundos claros) */
+  const colorLogo = SETTINGS.logo_url || DEFAULT_LOGO;
+
+  /* Logo branca (fundos escuros: hero, footer, header no topo) */
+  const whiteLogo = SETTINGS.logo_url_white || colorLogo;
+
+  /* Footer sempre usa branca (fundo cocoa escuro) */
+  footerLogo.src = whiteLogo;
+
+  /* Hero sempre usa branca (sobre imagem escura) */
+  heroLogo.src = whiteLogo;
+
+  /* Header: branca no topo, colorida ao rolar */
+  if(!document.getElementById('siteHeader').classList.contains('scrolled')){
+    headerLogo.src = whiteLogo;
+  } else {
+    headerLogo.src = colorLogo;
+  }
 }
 
 function renderCategories(){
@@ -623,7 +721,6 @@ function renderCatalogo(){
       <div class="grid-products">${items.map(productCard).join('')}</div>
     </div>`;
   }).join('');
-  // trigger reveal
   initReveal();
 }
 
@@ -656,7 +753,7 @@ function renderWhatsappFloat(){
   document.getElementById('waFloat').href = number ? `https://wa.me/${number}?text=${msg}` : '#';
 }
 
-/* carrinho */
+/* CARRINHO */
 function addToCart(id){
   const p = PRODUCTS.find(x => x.id === id);
   if(!p) return;
@@ -666,6 +763,16 @@ function addToCart(id){
   renderCart();
   openCart();
 }
+
+function addStaticBread(name, price, image_url){
+  const fakeId = 'static_' + name.replace(/\s/g,'_').toLowerCase();
+  const existing = cart.find(i => i.id === fakeId);
+  if(existing) existing.qty += 1;
+  else cart.push({id:fakeId, name, price, image_url, qty:1});
+  renderCart();
+  openCart();
+}
+
 function changeQty(id, delta){
   const item = cart.find(i => i.id === id);
   if(!item) return;
@@ -734,10 +841,23 @@ async function sendOrder(){
   window.open(url, '_blank');
 }
 
-/* nav scroll + mobile menu */
+/* HEADER SCROLL — troca a logo entre branca (topo) e colorida (rolado) */
 window.addEventListener('scroll', () => {
-  document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY > 60);
+  const header = document.getElementById('siteHeader');
+  const scrolled = window.scrollY > 60;
+  header.classList.toggle('scrolled', scrolled);
+
+  const headerLogo = document.getElementById('headerLogo');
+  const whiteLogo = SETTINGS.logo_url_white || SETTINGS.logo_url || DEFAULT_LOGO;
+  const colorLogo = SETTINGS.logo_url || DEFAULT_LOGO;
+
+  if(scrolled){
+    headerLogo.src = colorLogo;
+  } else {
+    headerLogo.src = whiteLogo;
+  }
 });
+
 document.getElementById('menuToggle').addEventListener('click', () => {
   document.getElementById('navLinks').classList.toggle('open');
 });
@@ -760,7 +880,7 @@ function toggleFaq(el){
   }
 }
 
-/* reveal on scroll */
+/* Reveal on scroll */
 function initReveal(){
   const els = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {

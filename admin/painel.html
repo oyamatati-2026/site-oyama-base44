@@ -12,11 +12,14 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root{
-    --bg:#FDFBF7; --bg-alt:#F5F0E8; --cocoa:#2D241E; --cocoa-muted:#6B5D52;
-    --ready:#556B2F; --order:#B8860B;
-    --line:rgba(45,36,30,.1); --line-strong:rgba(45,36,30,.15);
+    --bg:#FDFBF7; --bg-alt:#F5F0E8; --cocoa:#3D2E22; --cocoa-muted:#7A6B5D;
+    --wheat:#D4A373; --wheat-light:#E9C89B; --wheat-dark:#A67C52; --wheat-deep:#8B5E3C;
+    --terracotta:#BF6A38;
+    --ready:#A67C52; --order:#BF6A38;
+    --line:rgba(61,46,34,.1); --line-strong:rgba(61,46,34,.15);
     --serif:'Cormorant Garamond',Georgia,serif; --sans:'Inter',sans-serif;
     --radius:14px;
+    --wheat-grad:linear-gradient(135deg,#E9C89B 0%,#D4A373 50%,#A67C52 100%);
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{margin:0; font-family:var(--sans); color:var(--cocoa); background:var(--bg); display:none;}
@@ -28,14 +31,16 @@
   aside{
     width:250px; flex:0 0 250px; background:var(--cocoa); color:var(--bg);
     padding:28px 20px; position:sticky; top:0; height:100vh; overflow-y:auto;
+    border-right:3px solid var(--wheat-dark);
   }
   .side-brand{display:flex; align-items:center; gap:10px; font-family:var(--serif); font-weight:500; font-size:1.2rem; margin-bottom:4px;}
+  .side-brand img{height:36px;width:auto;filter:brightness(0) invert(1);}
   .side-role{font-size:.78rem; color:rgba(253,251,247,.5); margin-bottom:28px; line-height:1.5;}
-  .badge-role{display:inline-block; font-size:.68rem; font-weight:600; text-transform:uppercase; letter-spacing:.1em; padding:3px 8px; border-radius:999px; background:rgba(184,134,11,.2); color:var(--order); margin-top:4px;}
+  .badge-role{display:inline-block; font-size:.68rem; font-weight:600; text-transform:uppercase; letter-spacing:.1em; padding:3px 8px; border-radius:999px; background:rgba(212,163,115,.2); color:var(--wheat-light); margin-top:4px;}
   .side-nav{display:flex; flex-direction:column; gap:2px;}
   .side-nav button{text-align:left; background:none; border:none; color:rgba(253,251,247,.7); padding:11px 14px; border-radius:10px; font-size:.88rem; font-weight:500; transition:all .2s ease;}
   .side-nav button:hover{background:rgba(255,255,255,.06); color:var(--bg);}
-  .side-nav button.active{background:var(--bg); color:var(--cocoa);}
+  .side-nav button.active{background:var(--wheat-light); color:var(--cocoa);}
   .side-foot{margin-top:28px; padding-top:16px; border-top:.5px solid rgba(255,255,255,.12);}
   .side-foot button{background:rgba(255,255,255,.08); color:var(--bg); width:100%; padding:10px; border:none; border-radius:10px; font-weight:600; font-size:.82rem; transition:background .2s ease;}
   .side-foot button:hover{background:rgba(255,255,255,.15);}
@@ -43,7 +48,7 @@
   main{flex:1; padding:36px 40px; max-width:1100px;}
   .topbar{display:flex; justify-content:space-between; align-items:center; margin-bottom:32px; flex-wrap:wrap; gap:12px;}
   .topbar h1{margin:0; font-size:1.6rem; font-weight:500;}
-  .topbar a.view-site{font-size:.82rem; color:var(--order); text-decoration:none; font-weight:600; transition:opacity .2s ease;}
+  .topbar a.view-site{font-size:.82rem; color:var(--wheat-deep); text-decoration:none; font-weight:600; transition:opacity .2s ease;}
   .topbar a.view-site:hover{opacity:.7;}
 
   .panel{display:none;}
@@ -63,12 +68,12 @@
   .empty{color:var(--cocoa-muted); text-align:center; padding:24px; font-weight:300;}
 
   .pill{display:inline-block; font-size:.7rem; font-weight:600; padding:4px 10px; border-radius:999px; text-transform:uppercase; letter-spacing:.05em;}
-  .pill.on{background:rgba(85,107,47,.12); color:var(--ready);}
-  .pill.off{background:rgba(45,36,30,.08); color:var(--cocoa-muted);}
+  .pill.on{background:rgba(166,124,82,.12); color:var(--wheat-dark);}
+  .pill.off{background:rgba(61,46,34,.08); color:var(--cocoa-muted);}
 
   .btn{display:inline-flex; align-items:center; gap:6px; padding:9px 18px; border-radius:999px; border:none; font-weight:600; font-size:.82rem; transition:all .2s ease;}
-  .btn-primary{background:var(--cocoa); color:var(--bg);}
-  .btn-primary:hover{background:var(--order);}
+  .btn-primary{background:var(--wheat-grad); color:#fff;background-size:200% auto;}
+  .btn-primary:hover{background-position:right center;}
   .btn-outline{background:transparent; border:.5px solid var(--line-strong); color:var(--cocoa);}
   .btn-outline:hover{border-color:var(--cocoa);}
   .btn-danger{background:transparent; color:#B0233F; border:.5px solid rgba(180,40,40,.2);}
@@ -90,12 +95,12 @@
   .switch-row label{margin:0; text-transform:none; letter-spacing:0; color:var(--cocoa);}
   .locked-note{font-size:.82rem; color:var(--cocoa-muted); margin-top:16px; padding:12px 14px; background:var(--bg-alt); border-radius:10px; font-weight:300; line-height:1.6;}
   .locked-note b{color:var(--cocoa); font-weight:600;}
-  .locked-note a{color:var(--order); font-weight:600;}
+  .locked-note a{color:var(--wheat-deep); font-weight:600;}
 
   .type-preview{display:flex; gap:8px; margin-top:6px; padding:10px 14px; background:var(--bg-alt); border-radius:10px; font-size:.82rem; font-weight:500; align-items:center;}
   .type-preview .dot{width:8px; height:8px; border-radius:50%;}
-  .type-preview .dot.ready{background:var(--ready);}
-  .type-preview .dot.order{background:var(--order);}
+  .type-preview .dot.ready{background:var(--wheat-dark);}
+  .type-preview .dot.order{background:var(--terracotta);}
   .type-preview .dot.off{background:var(--cocoa-muted);}
 
   .toast{position:fixed; bottom:24px; right:24px; background:var(--cocoa); color:var(--bg); padding:14px 22px; border-radius:12px; font-size:.86rem; font-weight:500; z-index:100; opacity:0; transform:translateY(10px); transition:all .3s ease; pointer-events:none;}
@@ -111,7 +116,7 @@
 <body>
 
 <aside>
-  <div class="side-brand">🧁 Tati & Oyama</div>
+  <div class="side-brand"><img src="https://media.base44.com/images/public/6aa455885a5c91d0b076b408/e32110312_LogoTatiOyama1.png" alt="Tati & Oyama"></div>
   <div class="side-role" id="sideRole">carregando...</div>
   <nav class="side-nav" id="sideNav"></nav>
   <div class="side-foot">
@@ -302,7 +307,7 @@ async function loadOverview(){
   }
   document.getElementById('overviewStats').innerHTML = stats.map(([label,val]) => `
     <div class="card" style="margin-bottom:0">
-      <div style="font-size:2rem; font-weight:500; color:var(--cocoa); font-family:var(--serif);">${val}</div>
+      <div style="font-size:2rem; font-weight:500; color:var(--wheat-dark); font-family:var(--serif);">${val}</div>
       <div class="hint" style="margin:4px 0 0">${label}</div>
     </div>`).join('');
   document.getElementById('overviewMsg').textContent = ME.role === 'master'
@@ -332,7 +337,7 @@ async function loadProducts(){
   if(error){ tbody.innerHTML = `<tr><td colspan="8" class="empty">Erro ao carregar: ${error.message}</td></tr>`; return; }
   if(!data.length){ tbody.innerHTML = `<tr><td colspan="8" class="empty">Nenhum produto cadastrado ainda.</td></tr>`; return; }
   tbody.innerHTML = data.map(p => {
-    const typeLabel = p.stock > 0 ? `<span class="pill on">Pronta Entrega</span>` : (p.available ? `<span class="pill" style="background:rgba(184,134,11,.12);color:var(--order)">Sob Encomenda</span>` : `<span class="pill off">Indisponível</span>`);
+    const typeLabel = p.stock > 0 ? `<span class="pill on">Pronta Entrega</span>` : (p.available ? `<span class="pill" style="background:rgba(191,106,56,.12);color:var(--terracotta)">Sob Encomenda</span>` : `<span class="pill off">Indisponível</span>`);
     return `
     <tr>
       <td>${p.image_url ? `<img src="${p.image_url}">` : '—'}</td>
@@ -357,8 +362,8 @@ function openProductForm(p){
   const currentAvailable = p.available !== false;
   const typePreview = currentAvailable
     ? (currentStock > 0
-      ? `<div class="type-preview"><span class="dot ready"></span> Este produto aparecerá como <b>Pronta Entrega</b> (${currentStock} un.)</div>`
-      : `<div class="type-preview"><span class="dot order"></span> Este produto aparecerá como <b>Sob Encomenda</b></div>`)
+      ? `<div class="type-preview"><span class="dot ready"></span> Este produto aparecerá como <b style="color:var(--wheat-dark)">Pronta Entrega</b> (${currentStock} un.)</div>`
+      : `<div class="type-preview"><span class="dot order"></span> Este produto aparecerá como <b style="color:var(--terracotta)">Sob Encomenda</b></div>`)
     : `<div class="type-preview"><span class="dot off"></span> Produto indisponível — não aparece no site</div>`;
 
   const html = `
@@ -370,7 +375,7 @@ function openProductForm(p){
         <div><label>Preço (R$)</label><input type="number" step="0.01" min="0" id="pf_price" required value="${p.price||''}"></div>
         <div><label>Estoque (qtd. disponível)</label><input type="number" min="0" id="pf_stock" required value="${p.stock??0}"></div>
       </div>
-      <div class="field-hint" style="margin-top:-8px">Estoque > 0 = <b style="color:var(--ready)">Pronta Entrega</b> (mostra a quantidade no site). Estoque 0 = <b style="color:var(--order)">Sob Encomenda</b>.</div>
+      <div class="field-hint" style="margin-top:-8px">Estoque > 0 = <b style="color:var(--wheat-dark)">Pronta Entrega</b> (mostra a quantidade no site). Estoque 0 = <b style="color:var(--terracotta)">Sob Encomenda</b>.</div>
       <div id="typePreview">${typePreview}</div>
       <div class="switch-row"><input type="checkbox" id="pf_available" ${p.available!==false?'checked':''}> <label for="pf_available" style="margin:0">Disponível para venda</label></div>
       <div>
@@ -395,8 +400,8 @@ function openProductForm(p){
     const a = availInput.checked;
     previewEl.innerHTML = a
       ? (s > 0
-        ? `<div class="type-preview"><span class="dot ready"></span> Este produto aparecerá como <b>Pronta Entrega</b> (${s} un.)</div>`
-        : `<div class="type-preview"><span class="dot order"></span> Este produto aparecerá como <b>Sob Encomenda</b></div>`)
+        ? `<div class="type-preview"><span class="dot ready"></span> Este produto aparecerá como <b style="color:var(--wheat-dark)">Pronta Entrega</b> (${s} un.)</div>`
+        : `<div class="type-preview"><span class="dot order"></span> Este produto aparecerá como <b style="color:var(--terracotta)">Sob Encomenda</b></div>`)
       : `<div class="type-preview"><span class="dot off"></span> Produto indisponível — não aparece no site</div>`;
   }
   stockInput.addEventListener('input', updatePreview);
@@ -569,37 +574,123 @@ const SETTING_LABELS = {
   site_name:'Nome do site', hero_text:'Frase de destaque (banner principal)',
   whatsapp_number:'WhatsApp para atendimento (com DDI+DDD, ex: 5511999999999)',
   whatsapp_message_padrao:'Mensagem padrão do botão flutuante de WhatsApp',
-  primary_color:'Cor principal (texto/botões)', accent_color:'Cor de destaque (sob encomenda)',
+  primary_color:'Cor principal (texto/botões)', accent_color:'Cor de destaque (trigo)',
   background_color:'Cor de fundo',
-  meta_description:'Descrição para o Google (SEO)', horario_atendimento:'Horário de atendimento', endereco_atendimento:'Endereço (opcional)'
+  meta_description:'Descrição para o Google (SEO)', horario_atendimento:'Horário de atendimento', endereco_atendimento:'Endereço (opcional)',
+  hero_image_url:'Imagem de fundo do banner principal (hero)',
+  logo_url:'Logo colorida para fundo claro (header quando rolado)',
+  logo_url_white:'Logo branca para fundo escuro (hero, footer e header no topo)'
 };
 const COLOR_KEYS = ['primary_color','accent_color','background_color'];
+const IMAGE_KEYS = ['hero_image_url','logo_url','logo_url_white'];
+const IMAGE_HINTS = {
+  hero_image_url:'Proporção 16:9 · 1920×1080px · JPG ou WEBP · imagem de fundo do topo do site',
+  logo_url:'Logo colorida · fundo transparente PNG · usada no header quando rolado e em fundos claros',
+  logo_url_white:'Logo em branco · fundo transparente PNG · usada no centro do hero, no footer e no header no topo'
+};
 async function loadSettings(){
   const { data, error } = await sb.from('site_settings').select('*').order('key');
   const form = document.getElementById('settingsForm');
   if(error){ form.innerHTML = `<p class="empty">Erro: ${error.message}</p>`; return; }
   let anyLocked = false;
-  form.innerHTML = data.map(s => {
+
+  /* Garante que as chaves de imagem existam na listagem mesmo se ainda não foram criadas no banco */
+  let settingsData = data || [];
+  IMAGE_KEYS.forEach(ik => {
+    if(!settingsData.find(s => s.key === ik)){
+      settingsData.push({ key: ik, value: '', editable_by_loja: true });
+    }
+  });
+
+  form.innerHTML = settingsData.map(s => {
     const canEdit = ME.role === 'master' || s.editable_by_loja;
     if(!canEdit) anyLocked = true;
     const isColor = COLOR_KEYS.includes(s.key);
+    const isImage = IMAGE_KEYS.includes(s.key);
     const isLong = s.key === 'hero_text' || s.key === 'whatsapp_message_padrao' || s.key === 'meta_description';
-    const inputHtml = isColor
-      ? `<input type="color" data-key="${s.key}" value="${s.value||'#2D241E'}" ${canEdit?'':'disabled'} style="width:70px; padding:4px;">`
-      : isLong
-      ? `<textarea data-key="${s.key}" rows="2" ${canEdit?'':'disabled'}>${s.value||''}</textarea>`
-      : `<input data-key="${s.key}" value="${s.value||''}" ${canEdit?'':'disabled'}>`;
+
+    let inputHtml;
+    if(isImage){
+      const hint = IMAGE_HINTS[s.key] || '';
+      const hasImg = s.value && s.value.startsWith('http');
+      inputHtml = `
+        <div class="image-upload-row" style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;">
+          <div style="flex:1;min-width:200px;">
+            <input type="file" accept="image/*" data-image-key="${s.key}" ${canEdit?'':'disabled'} style="font-size:.82rem;padding:8px;border:.5px solid var(--line-strong);border-radius:10px;background:#fff;width:100%;">
+            <div class="field-hint">${hint}</div>
+            ${hasImg ? `<input data-key="${s.key}" value="${s.value}" ${canEdit?'':'disabled'} style="margin-top:8px;font-size:.78rem;">` : `<input type="hidden" data-key="${s.key}" value="">`}
+          </div>
+          ${hasImg ? `<img src="${s.value}" alt="preview" style="width:80px;height:80px;object-fit:cover;border-radius:10px;border:.5px solid var(--line);">` : ''}
+        </div>`;
+    } else if(isColor){
+      inputHtml = `<input type="color" data-key="${s.key}" value="${s.value||'#3D2E22'}" ${canEdit?'':'disabled'} style="width:70px; padding:4px;">`;
+    } else if(isLong){
+      inputHtml = `<textarea data-key="${s.key}" rows="2" ${canEdit?'':'disabled'}>${s.value||''}</textarea>`;
+    } else {
+      inputHtml = `<input data-key="${s.key}" value="${s.value||''}" ${canEdit?'':'disabled'}>`;
+    }
+
     return `<div><label>${SETTING_LABELS[s.key] || s.key}</label>${inputHtml}</div>`;
-  }).join('') + `<div><button class="btn btn-primary" type="button" onclick="saveSettings()">Salvar configurações</button></div>`;
+  }).join('') + `
+    <div><button class="btn btn-primary" type="button" onclick="saveSettings()">Salvar configurações</button></div>
+    <div class="locked-note" style="display:block">
+      <b>📋 NOTA — Mudanças no banco de dados (Supabase):</b><br>
+      Para que as imagens do hero e logos funcionem, adicione as seguintes chaves na tabela <b>site_settings</b>:
+      <ul style="margin:8px 0 0 20px;line-height:1.8">
+        <li><b>hero_image_url</b> — URL da imagem de fundo do banner principal</li>
+        <li><b>logo_url</b> — URL da logo para fundo claro (header rolado)</li>
+        <li><b>logo_url_white</b> — URL da logo branca para fundo escuro (hero/footer)</li>
+      </ul>
+      Crie também a categoria <b>"Pães"</b> (slug: paes) na tabela <b>categories</b> para que os pães cadastrados apareçam automaticamente no site.
+    </div>`;
   document.getElementById('settingsLockNote').style.display = anyLocked ? 'block' : 'none';
+
+  /* Listener para upload de imagens */
+  document.querySelectorAll('#settingsForm input[type=file][data-image-key]').forEach(inp => {
+    inp.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if(!file) return;
+      const key = e.target.dataset.imageKey;
+      try{
+        toast('Enviando imagem...');
+        const url = await uploadImage(file, 'settings');
+        /* Atualiza o input hidden com a URL */
+        const hiddenInput = document.querySelector(`#settingsForm [data-key="${key}"]`);
+        if(hiddenInput){
+          hiddenInput.value = url;
+          if(hiddenInput.type === 'hidden') hiddenInput.setAttribute('value', url);
+        }
+        /* Salva automaticamente no banco */
+        const { error: saveErr } = await sb.from('site_settings').update({ value: url }).eq('key', key);
+        if(saveErr){
+          /* Se a chave não existe ainda, tenta inserir */
+          const { error: insertErr } = await sb.from('site_settings').insert({ key, value: url, editable_by_loja: true });
+          if(insertErr) throw insertErr;
+        }
+        toast('Imagem salva com sucesso!');
+        loadSettings(); /* recarrega para mostrar preview */
+      }catch(err){ toast('Erro: ' + err.message); }
+    });
+  });
 }
 async function saveSettings(){
   const inputs = document.querySelectorAll('#settingsForm [data-key]');
   try{
     for(const inp of inputs){
       if(inp.disabled) continue;
-      const { error } = await sb.from('site_settings').update({ value: inp.value }).eq('key', inp.dataset.key);
-      if(error) throw error;
+      /* Pula inputs type=file (são tratados pelo upload automático) */
+      if(inp.type === 'file') continue;
+      const value = inp.value;
+      /* Tenta update primeiro, se não existir a linha faz insert */
+      const { error: updErr } = await sb.from('site_settings').update({ value }).eq('key', inp.dataset.key);
+      if(updErr || (updErr === null && updErr !== undefined)){
+        /* Verifica se atualizou alguma linha; se não, insere */
+        /* Tenta inserir caso a chave não exista */
+        const { error: insertErr } = await sb.from('site_settings').insert({ key: inp.dataset.key, value, editable_by_loja: true });
+        if(insertErr && insertErr.message !== 'duplicate key value violates unique constraint') {
+          /* Se já existe, o update acima já deve ter funcionado */
+        }
+      }
     }
     toast('Configurações atualizadas!');
   }catch(err){ toast('Erro: ' + err.message); }
