@@ -12,14 +12,11 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root{
-    --bg:#FDFBF7; --bg-alt:#F5F0E8; --cocoa:#3D2E22; --cocoa-muted:#7A6B5D;
-    --wheat:#D4A373; --wheat-light:#E9C89B; --wheat-dark:#A67C52; --wheat-deep:#8B5E3C;
-    --terracotta:#BF6A38;
-    --ready:#A67C52; --order:#BF6A38;
-    --line:rgba(61,46,34,.1); --line-strong:rgba(61,46,34,.15);
+    --bg:#FDFBF7; --bg-alt:#F5F0E8; --cocoa:#2D241E; --cocoa-muted:#6B5D52;
+    --ready:#556B2F; --order:#B8860B;
+    --line:rgba(45,36,30,.1); --line-strong:rgba(45,36,30,.15);
     --serif:'Cormorant Garamond',Georgia,serif; --sans:'Inter',sans-serif;
     --radius:14px;
-    --wheat-grad:linear-gradient(135deg,#E9C89B 0%,#D4A373 50%,#A67C52 100%);
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{margin:0; font-family:var(--sans); color:var(--cocoa); background:var(--bg); display:none;}
@@ -31,16 +28,14 @@
   aside{
     width:250px; flex:0 0 250px; background:var(--cocoa); color:var(--bg);
     padding:28px 20px; position:sticky; top:0; height:100vh; overflow-y:auto;
-    border-right:3px solid var(--wheat-dark);
   }
   .side-brand{display:flex; align-items:center; gap:10px; font-family:var(--serif); font-weight:500; font-size:1.2rem; margin-bottom:4px;}
-  .side-brand img{height:36px;width:auto;filter:brightness(0) invert(1);}
   .side-role{font-size:.78rem; color:rgba(253,251,247,.5); margin-bottom:28px; line-height:1.5;}
-  .badge-role{display:inline-block; font-size:.68rem; font-weight:600; text-transform:uppercase; letter-spacing:.1em; padding:3px 8px; border-radius:999px; background:rgba(212,163,115,.2); color:var(--wheat-light); margin-top:4px;}
+  .badge-role{display:inline-block; font-size:.68rem; font-weight:600; text-transform:uppercase; letter-spacing:.1em; padding:3px 8px; border-radius:999px; background:rgba(184,134,11,.2); color:var(--order); margin-top:4px;}
   .side-nav{display:flex; flex-direction:column; gap:2px;}
   .side-nav button{text-align:left; background:none; border:none; color:rgba(253,251,247,.7); padding:11px 14px; border-radius:10px; font-size:.88rem; font-weight:500; transition:all .2s ease;}
   .side-nav button:hover{background:rgba(255,255,255,.06); color:var(--bg);}
-  .side-nav button.active{background:var(--wheat-light); color:var(--cocoa);}
+  .side-nav button.active{background:var(--bg); color:var(--cocoa);}
   .side-foot{margin-top:28px; padding-top:16px; border-top:.5px solid rgba(255,255,255,.12);}
   .side-foot button{background:rgba(255,255,255,.08); color:var(--bg); width:100%; padding:10px; border:none; border-radius:10px; font-weight:600; font-size:.82rem; transition:background .2s ease;}
   .side-foot button:hover{background:rgba(255,255,255,.15);}
@@ -48,7 +43,7 @@
   main{flex:1; padding:36px 40px; max-width:1100px;}
   .topbar{display:flex; justify-content:space-between; align-items:center; margin-bottom:32px; flex-wrap:wrap; gap:12px;}
   .topbar h1{margin:0; font-size:1.6rem; font-weight:500;}
-  .topbar a.view-site{font-size:.82rem; color:var(--wheat-deep); text-decoration:none; font-weight:600; transition:opacity .2s ease;}
+  .topbar a.view-site{font-size:.82rem; color:var(--order); text-decoration:none; font-weight:600; transition:opacity .2s ease;}
   .topbar a.view-site:hover{opacity:.7;}
 
   .panel{display:none;}
@@ -68,12 +63,26 @@
   .empty{color:var(--cocoa-muted); text-align:center; padding:24px; font-weight:300;}
 
   .pill{display:inline-block; font-size:.7rem; font-weight:600; padding:4px 10px; border-radius:999px; text-transform:uppercase; letter-spacing:.05em;}
-  .pill.on{background:rgba(166,124,82,.12); color:var(--wheat-dark);}
-  .pill.off{background:rgba(61,46,34,.08); color:var(--cocoa-muted);}
+  tr.order-new{background:rgba(192,67,62,.05);}
+  .new-dot{width:10px;height:10px;border-radius:50%;background:#C0433E;display:inline-block;box-shadow:0 0 0 rgba(192,67,62,.5);animation:pulseDot 1.8s infinite;}
+  @keyframes pulseDot{0%{box-shadow:0 0 0 0 rgba(192,67,62,.45);}70%{box-shadow:0 0 0 7px rgba(192,67,62,0);}100%{box-shadow:0 0 0 0 rgba(192,67,62,0);}}
+  .type-pill{display:inline-block;font-size:.66rem;font-weight:700;padding:3px 8px;border-radius:999px;text-transform:uppercase;letter-spacing:.04em;margin:1px 3px 1px 0;white-space:nowrap;}
+  .type-pill.ready{background:rgba(85,107,47,.15);color:var(--ready);}
+  .type-pill.order{background:rgba(184,134,11,.15);color:var(--order);}
+  .type-pill.unknown{background:var(--bg-alt);color:var(--cocoa-muted);}
+  .pay-methods{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;}
+  .pay-btn{padding:10px 16px;border-radius:10px;border:1.5px solid var(--line-strong);background:#fff;font-weight:600;font-size:.84rem;cursor:pointer;transition:all .2s ease;color:var(--cocoa);}
+  .pay-btn:hover{border-color:var(--cocoa);}
+  .pay-btn.active{background:var(--cocoa);color:#fff;border-color:var(--cocoa);}
+  .pdv-item-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:.5px solid var(--line);font-size:.9rem;flex-wrap:wrap;}
+  .pdv-item-row .pdv-item-controls{display:flex;align-items:center;gap:8px;}
+  .pdv-total{font-family:var(--serif);font-size:1.7rem;color:var(--cocoa);margin-top:16px;}
+  .pill.on{background:rgba(85,107,47,.12); color:var(--ready);}
+  .pill.off{background:rgba(45,36,30,.08); color:var(--cocoa-muted);}
 
   .btn{display:inline-flex; align-items:center; gap:6px; padding:9px 18px; border-radius:999px; border:none; font-weight:600; font-size:.82rem; transition:all .2s ease;}
-  .btn-primary{background:var(--wheat-grad); color:#fff;background-size:200% auto;}
-  .btn-primary:hover{background-position:right center;}
+  .btn-primary{background:var(--cocoa); color:var(--bg);}
+  .btn-primary:hover{background:var(--order);}
   .btn-outline{background:transparent; border:.5px solid var(--line-strong); color:var(--cocoa);}
   .btn-outline:hover{border-color:var(--cocoa);}
   .btn-danger{background:transparent; color:#B0233F; border:.5px solid rgba(180,40,40,.2);}
@@ -95,12 +104,12 @@
   .switch-row label{margin:0; text-transform:none; letter-spacing:0; color:var(--cocoa);}
   .locked-note{font-size:.82rem; color:var(--cocoa-muted); margin-top:16px; padding:12px 14px; background:var(--bg-alt); border-radius:10px; font-weight:300; line-height:1.6;}
   .locked-note b{color:var(--cocoa); font-weight:600;}
-  .locked-note a{color:var(--wheat-deep); font-weight:600;}
+  .locked-note a{color:var(--order); font-weight:600;}
 
   .type-preview{display:flex; gap:8px; margin-top:6px; padding:10px 14px; background:var(--bg-alt); border-radius:10px; font-size:.82rem; font-weight:500; align-items:center;}
   .type-preview .dot{width:8px; height:8px; border-radius:50%;}
-  .type-preview .dot.ready{background:var(--wheat-dark);}
-  .type-preview .dot.order{background:var(--terracotta);}
+  .type-preview .dot.ready{background:var(--ready);}
+  .type-preview .dot.order{background:var(--order);}
   .type-preview .dot.off{background:var(--cocoa-muted);}
 
   .toast{position:fixed; bottom:24px; right:24px; background:var(--cocoa); color:var(--bg); padding:14px 22px; border-radius:12px; font-size:.86rem; font-weight:500; z-index:100; opacity:0; transform:translateY(10px); transition:all .3s ease; pointer-events:none;}
@@ -116,7 +125,7 @@
 <body>
 
 <aside>
-  <div class="side-brand"><img src="https://media.base44.com/images/public/6aa455885a5c91d0b076b408/e32110312_LogoTatiOyama1.png" alt="Tati & Oyama"></div>
+  <div class="side-brand">🧁 Tati & Oyama</div>
   <div class="side-role" id="sideRole">carregando...</div>
   <nav class="side-nav" id="sideNav"></nav>
   <div class="side-foot">
@@ -161,7 +170,7 @@
   <section class="panel" id="panel-banners">
     <div class="card">
       <div class="btn-row" style="justify-content:space-between; margin-bottom:14px;">
-        <div><h3 style="margin:0">Banners</h3><p class="hint" style="margin:4px 0 0">Banner principal exibido no topo do site.</p></div>
+        <div><h3 style="margin:0">Banners</h3><p class="hint" style="margin:4px 0 0">A imagem do <b>primeiro banner ativo</b> (menor "Ordem") é usada como fundo da tela inicial do site. Título/subtítulo não são exibidos — a logo já aparece por cima da imagem.</p></div>
         <button class="btn btn-primary" onclick="openBannerForm()">+ Novo banner</button>
       </div>
       <div style="overflow-x:auto"><table id="bannersTable"><thead><tr><th></th><th>Título</th><th>Ordem</th><th>Status</th><th></th></tr></thead><tbody></tbody></table></div>
@@ -179,8 +188,29 @@
 
   <section class="panel" id="panel-config">
     <div class="card">
+      <h3>Identidade visual</h3>
+      <p class="hint">Envie a logo em duas versões: colorida (fundos claros) e branca (fundos escuros/imagens). Aparece no cabeçalho e no rodapé do site.</p>
+      <form class="stack" id="logoForm">
+        <div>
+          <label>Logo colorida (fundo claro)</label>
+          <input type="file" id="lf_color" accept="image/png">
+          <div class="field-hint">PNG com fundo transparente. Usada quando a página está rolada (fundo claro).</div>
+          <img id="lf_color_preview" style="max-width:160px;margin-top:8px;border-radius:8px;background:var(--bg-alt);padding:6px">
+        </div>
+        <div>
+          <label>Logo branca (fundo escuro / imagem)</label>
+          <input type="file" id="lf_white" accept="image/png">
+          <div class="field-hint">PNG com fundo transparente. Usada no topo (sobre a foto) e no rodapé.</div>
+          <img id="lf_white_preview" style="max-width:160px;margin-top:8px;border-radius:8px;background:var(--cocoa);padding:6px">
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-primary" type="button" onclick="saveLogos()">Salvar logos</button>
+        </div>
+      </form>
+    </div>
+    <div class="card">
       <h3>Configurações do site</h3>
-      <p class="hint">WhatsApp, textos e cores usados no site público.</p>
+      <p class="hint">WhatsApp, textos e cores usados no site público. A imagem de fundo da tela inicial é gerenciada em <b>Banners</b>.</p>
       <form class="stack" id="settingsForm"></form>
       <div class="locked-note" id="settingsLockNote" style="display:none">Campos em cinza só podem ser alterados pela Serf Tecnologia (MASTER).</div>
     </div>
@@ -190,7 +220,50 @@
     <div class="card">
       <h3>Pedidos / solicitações</h3>
       <p class="hint">Registro dos pedidos enviados pelo "Monte seu pedido" no site.</p>
-      <div style="overflow-x:auto"><table id="ordersTable"><thead><tr><th>Data</th><th>Cliente</th><th>Itens</th><th>Observação</th><th>Status</th><th></th></tr></thead><tbody></tbody></table></div>
+      <div id="newOrdersBanner" style="display:none;margin-bottom:14px;padding:12px 16px;background:rgba(192,67,62,.08);border:1px solid rgba(192,67,62,.25);border-radius:10px;font-size:.86rem;font-weight:600;color:#B0233F;"></div>
+      <div style="overflow-x:auto"><table id="ordersTable"><thead><tr><th></th><th>Data</th><th>Cliente</th><th>Itens</th><th>Tipo</th><th>Observação</th><th>Status</th><th></th></tr></thead><tbody></tbody></table></div>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-pdv">
+    <div class="card">
+      <h3>Nova venda (PDV)</h3>
+      <p class="hint">Lance aqui vendas feitas por outros canais (balcão, WhatsApp, etc). Ao finalizar, o estoque dos produtos é atualizado automaticamente.</p>
+
+      <div style="display:grid;grid-template-columns:2fr 1fr auto;gap:12px;align-items:end;">
+        <div><label>Produto</label><select id="pdv_product"></select></div>
+        <div><label>Quantidade</label><input type="number" id="pdv_qty" value="1" min="1"></div>
+        <div><button class="btn btn-outline" type="button" onclick="pdvAddItem()">+ Adicionar</button></div>
+      </div>
+      <div class="field-hint" id="pdv_stock_hint" style="margin-top:6px"></div>
+
+      <div id="pdvCartList" style="margin-top:18px"></div>
+      <p class="empty" id="pdvCartEmpty" style="margin-top:10px">Nenhum item adicionado ainda.</p>
+
+      <div style="margin-top:20px">
+        <label>Forma de pagamento</label>
+        <div class="pay-methods" id="pdvPayMethods">
+          <button type="button" class="pay-btn" data-val="dinheiro" onclick="pdvSetPayment('dinheiro')">💵 Dinheiro</button>
+          <button type="button" class="pay-btn" data-val="pix" onclick="pdvSetPayment('pix')">📱 PIX</button>
+          <button type="button" class="pay-btn" data-val="credito" onclick="pdvSetPayment('credito')">💳 Crédito (POS)</button>
+          <button type="button" class="pay-btn" data-val="debito" onclick="pdvSetPayment('debito')">💳 Débito (POS)</button>
+        </div>
+      </div>
+
+      <div style="margin-top:16px"><label>Cliente (opcional)</label><input id="pdv_customer" placeholder="Nome do cliente"></div>
+      <div style="margin-top:12px"><label>Observação (opcional)</label><textarea id="pdv_note" rows="2"></textarea></div>
+
+      <div class="pdv-total">Total: <span id="pdvTotal">R$ 0,00</span></div>
+      <div class="btn-row" style="margin-top:14px">
+        <button class="btn btn-primary" type="button" onclick="pdvFinalizeSale()">Finalizar venda</button>
+        <button class="btn btn-outline" type="button" onclick="pdvResetCart()">Limpar</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Vendas do PDV</h3>
+      <p class="hint">Histórico das vendas lançadas manualmente. Cancelar devolve o estoque dos itens.</p>
+      <div style="overflow-x:auto"><table id="pdvSalesTable"><thead><tr><th>Data</th><th>Cliente</th><th>Itens</th><th>Pagamento</th><th>Total</th><th>Status</th><th></th></tr></thead><tbody></tbody></table></div>
     </div>
   </section>
 
@@ -250,14 +323,14 @@ const MENUS = {
   master: [
     ['overview','Visão geral'], ['produtos','Produtos'], ['categorias','Categorias'],
     ['banners','Banners'], ['links','Links & redes'], ['config','Configurações'],
-    ['pedidos','Pedidos'], ['usuarios','Usuários'], ['conta','Minha conta']
+    ['pdv','PDV'], ['pedidos','Pedidos'], ['usuarios','Usuários'], ['conta','Minha conta']
   ],
   loja: [
     ['overview','Visão geral'], ['produtos','Produtos & estoque'],
-    ['links','Links & redes'], ['config','Configurações'], ['pedidos','Pedidos'], ['conta','Minha conta']
+    ['links','Links & redes'], ['config','Configurações'], ['pdv','PDV'], ['pedidos','Pedidos'], ['conta','Minha conta']
   ]
 };
-const TITLES = {overview:'Visão geral', produtos:'Produtos', categorias:'Categorias', banners:'Banners', links:'Links & redes sociais', config:'Configurações do site', pedidos:'Pedidos / solicitações', usuarios:'Usuários & permissões', conta:'Minha conta'};
+const TITLES = {overview:'Visão geral', produtos:'Produtos', categorias:'Categorias', banners:'Banners', links:'Links & redes sociais', config:'Configurações do site', pdv:'PDV — Vendas manuais', pedidos:'Pedidos / solicitações', usuarios:'Usuários & permissões', conta:'Minha conta'};
 
 function buildMenu(){
   const items = MENUS[ME.role] || MENUS.loja;
@@ -275,6 +348,7 @@ function showPanel(key){
   if(key==='links') loadLinks();
   if(key==='config') loadSettings();
   if(key==='pedidos') loadOrders();
+  if(key==='pdv') loadPDV();
   if(key==='usuarios') loadUsers();
   if(key==='overview') loadOverview();
 }
@@ -307,7 +381,7 @@ async function loadOverview(){
   }
   document.getElementById('overviewStats').innerHTML = stats.map(([label,val]) => `
     <div class="card" style="margin-bottom:0">
-      <div style="font-size:2rem; font-weight:500; color:var(--wheat-dark); font-family:var(--serif);">${val}</div>
+      <div style="font-size:2rem; font-weight:500; color:var(--cocoa); font-family:var(--serif);">${val}</div>
       <div class="hint" style="margin:4px 0 0">${label}</div>
     </div>`).join('');
   document.getElementById('overviewMsg').textContent = ME.role === 'master'
@@ -337,7 +411,7 @@ async function loadProducts(){
   if(error){ tbody.innerHTML = `<tr><td colspan="8" class="empty">Erro ao carregar: ${error.message}</td></tr>`; return; }
   if(!data.length){ tbody.innerHTML = `<tr><td colspan="8" class="empty">Nenhum produto cadastrado ainda.</td></tr>`; return; }
   tbody.innerHTML = data.map(p => {
-    const typeLabel = p.stock > 0 ? `<span class="pill on">Pronta Entrega</span>` : (p.available ? `<span class="pill" style="background:rgba(191,106,56,.12);color:var(--terracotta)">Sob Encomenda</span>` : `<span class="pill off">Indisponível</span>`);
+    const typeLabel = p.stock > 0 ? `<span class="pill on">Pronta Entrega</span>` : (p.available ? `<span class="pill" style="background:rgba(184,134,11,.12);color:var(--order)">Sob Encomenda</span>` : `<span class="pill off">Indisponível</span>`);
     return `
     <tr>
       <td>${p.image_url ? `<img src="${p.image_url}">` : '—'}</td>
@@ -362,8 +436,8 @@ function openProductForm(p){
   const currentAvailable = p.available !== false;
   const typePreview = currentAvailable
     ? (currentStock > 0
-      ? `<div class="type-preview"><span class="dot ready"></span> Este produto aparecerá como <b style="color:var(--wheat-dark)">Pronta Entrega</b> (${currentStock} un.)</div>`
-      : `<div class="type-preview"><span class="dot order"></span> Este produto aparecerá como <b style="color:var(--terracotta)">Sob Encomenda</b></div>`)
+      ? `<div class="type-preview"><span class="dot ready"></span> Este produto aparecerá como <b>Pronta Entrega</b> (${currentStock} un.)</div>`
+      : `<div class="type-preview"><span class="dot order"></span> Este produto aparecerá como <b>Sob Encomenda</b></div>`)
     : `<div class="type-preview"><span class="dot off"></span> Produto indisponível — não aparece no site</div>`;
 
   const html = `
@@ -375,7 +449,7 @@ function openProductForm(p){
         <div><label>Preço (R$)</label><input type="number" step="0.01" min="0" id="pf_price" required value="${p.price||''}"></div>
         <div><label>Estoque (qtd. disponível)</label><input type="number" min="0" id="pf_stock" required value="${p.stock??0}"></div>
       </div>
-      <div class="field-hint" style="margin-top:-8px">Estoque > 0 = <b style="color:var(--wheat-dark)">Pronta Entrega</b> (mostra a quantidade no site). Estoque 0 = <b style="color:var(--terracotta)">Sob Encomenda</b>.</div>
+      <div class="field-hint" style="margin-top:-8px">Estoque > 0 = <b style="color:var(--ready)">Pronta Entrega</b> (mostra a quantidade no site). Estoque 0 = <b style="color:var(--order)">Sob Encomenda</b>.</div>
       <div id="typePreview">${typePreview}</div>
       <div class="switch-row"><input type="checkbox" id="pf_available" ${p.available!==false?'checked':''}> <label for="pf_available" style="margin:0">Disponível para venda</label></div>
       <div>
@@ -400,8 +474,8 @@ function openProductForm(p){
     const a = availInput.checked;
     previewEl.innerHTML = a
       ? (s > 0
-        ? `<div class="type-preview"><span class="dot ready"></span> Este produto aparecerá como <b style="color:var(--wheat-dark)">Pronta Entrega</b> (${s} un.)</div>`
-        : `<div class="type-preview"><span class="dot order"></span> Este produto aparecerá como <b style="color:var(--terracotta)">Sob Encomenda</b></div>`)
+        ? `<div class="type-preview"><span class="dot ready"></span> Este produto aparecerá como <b>Pronta Entrega</b> (${s} un.)</div>`
+        : `<div class="type-preview"><span class="dot order"></span> Este produto aparecerá como <b>Sob Encomenda</b></div>`)
       : `<div class="type-preview"><span class="dot off"></span> Produto indisponível — não aparece no site</div>`;
   }
   stockInput.addEventListener('input', updatePreview);
@@ -519,7 +593,8 @@ function openBannerForm(b){
       <div><label>Subtítulo</label><input id="bf_subtitle" value="${b.subtitle||''}"></div>
       <div class="two-col"><div><label>Texto do botão</label><input id="bf_btn_text" value="${b.button_text||''}"></div><div><label>Link do botão</label><input id="bf_btn_link" value="${b.button_link||''}" placeholder="#cardapio"></div></div>
       <div><label>Ordem</label><input type="number" id="bf_order" value="${b.sort_order??0}"></div>
-      <div><label>Imagem do banner</label><input type="file" id="bf_image" accept="image/*"><div class="field-hint">Proporção 16:6 · 1920×720px · JPG ou WEBP.</div></div>
+      <div><label>Imagem do banner (fundo da tela inicial)</label><input type="file" id="bf_image" accept="image/*"><div class="field-hint">Ideal: imagem larga e horizontal, mínimo 1920×1080px · JPG ou WEBP. Evite imagens com texto — a logo já é exibida por cima.</div></div>
+      <div><label>Imagem do banner (versão mobile — opcional)</label><input type="file" id="bf_image_mobile" accept="image/*"><div class="field-hint">Se enviada, é usada em telas de celular. Se não enviar, a imagem acima é usada em todas as telas.</div></div>
       <div class="switch-row"><input type="checkbox" id="bf_active" ${b.active!==false?'checked':''}> <label for="bf_active" style="margin:0">Banner ativo</label></div>
       <div class="btn-row"><button class="btn btn-primary" type="submit">Salvar</button><button class="btn btn-outline" type="button" onclick="closeModal()">Cancelar</button></div>
     </form>`;
@@ -528,8 +603,10 @@ function openBannerForm(b){
     e.preventDefault();
     try{
       const file = document.getElementById('bf_image').files[0];
+      const fileMobile = document.getElementById('bf_image_mobile').files[0];
       const payload = { title: document.getElementById('bf_title').value.trim(), subtitle: document.getElementById('bf_subtitle').value.trim(), button_text: document.getElementById('bf_btn_text').value.trim(), button_link: document.getElementById('bf_btn_link').value.trim(), sort_order: parseInt(document.getElementById('bf_order').value,10) || 0, active: document.getElementById('bf_active').checked };
       if(file) payload.image_url = await uploadImage(file, 'banners');
+      if(fileMobile) payload.image_url_mobile = await uploadImage(fileMobile, 'banners');
       const { error } = b.id ? await sb.from('banners').update(payload).eq('id', b.id) : await sb.from('banners').insert(payload);
       if(error) throw error;
       toast('Banner salvo!'); closeModal(); loadBanners();
@@ -571,126 +648,72 @@ async function saveLinks(){
 
 /* CONFIGURAÇÕES */
 const SETTING_LABELS = {
-  site_name:'Nome do site', hero_text:'Frase de destaque (banner principal)',
+  site_name:'Nome do site', hero_text:'Frase de destaque (não usada mais no banner)',
+  hero_tagline:'Frase abaixo da logo no banner principal',
   whatsapp_number:'WhatsApp para atendimento (com DDI+DDD, ex: 5511999999999)',
   whatsapp_message_padrao:'Mensagem padrão do botão flutuante de WhatsApp',
   primary_color:'Cor principal (texto/botões)', accent_color:'Cor de destaque (trigo)',
+  secondary_color:'Cor de apoio (trigo claro)',
   background_color:'Cor de fundo',
-  meta_description:'Descrição para o Google (SEO)', horario_atendimento:'Horário de atendimento', endereco_atendimento:'Endereço (opcional)',
-  hero_image_url:'Imagem de fundo do banner principal (hero)',
-  logo_url:'Logo colorida para fundo claro (header quando rolado)',
-  logo_url_white:'Logo branca para fundo escuro (hero, footer e header no topo)'
+  meta_description:'Descrição para o Google (SEO)', horario_atendimento:'Horário de atendimento', endereco_atendimento:'Endereço (opcional)'
 };
-const COLOR_KEYS = ['primary_color','accent_color','background_color'];
-const IMAGE_KEYS = ['hero_image_url','logo_url','logo_url_white'];
-const IMAGE_HINTS = {
-  hero_image_url:'Proporção 16:9 · 1920×1080px · JPG ou WEBP · imagem de fundo do topo do site',
-  logo_url:'Logo colorida · fundo transparente PNG · usada no header quando rolado e em fundos claros',
-  logo_url_white:'Logo em branco · fundo transparente PNG · usada no centro do hero, no footer e no header no topo'
-};
+// Chaves grandes (base64 de imagem) que têm interface própria — não aparecem aqui
+const SETTING_HIDE_KEYS = ['logo_url','logo_white','logo_mark','logo_color','hero_eyebrow','hero_text_style','hero_text'];
+const COLOR_KEYS = ['primary_color','accent_color','secondary_color','background_color'];
 async function loadSettings(){
   const { data, error } = await sb.from('site_settings').select('*').order('key');
   const form = document.getElementById('settingsForm');
   if(error){ form.innerHTML = `<p class="empty">Erro: ${error.message}</p>`; return; }
   let anyLocked = false;
-
-  /* Garante que as chaves de imagem existam na listagem mesmo se ainda não foram criadas no banco */
-  let settingsData = data || [];
-  IMAGE_KEYS.forEach(ik => {
-    if(!settingsData.find(s => s.key === ik)){
-      settingsData.push({ key: ik, value: '', editable_by_loja: true });
-    }
-  });
-
-  form.innerHTML = settingsData.map(s => {
+  const rows = data.filter(s => !SETTING_HIDE_KEYS.includes(s.key));
+  form.innerHTML = rows.map(s => {
     const canEdit = ME.role === 'master' || s.editable_by_loja;
     if(!canEdit) anyLocked = true;
     const isColor = COLOR_KEYS.includes(s.key);
-    const isImage = IMAGE_KEYS.includes(s.key);
     const isLong = s.key === 'hero_text' || s.key === 'whatsapp_message_padrao' || s.key === 'meta_description';
-
-    let inputHtml;
-    if(isImage){
-      const hint = IMAGE_HINTS[s.key] || '';
-      const hasImg = s.value && s.value.startsWith('http');
-      inputHtml = `
-        <div class="image-upload-row" style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;">
-          <div style="flex:1;min-width:200px;">
-            <input type="file" accept="image/*" data-image-key="${s.key}" ${canEdit?'':'disabled'} style="font-size:.82rem;padding:8px;border:.5px solid var(--line-strong);border-radius:10px;background:#fff;width:100%;">
-            <div class="field-hint">${hint}</div>
-            ${hasImg ? `<input data-key="${s.key}" value="${s.value}" ${canEdit?'':'disabled'} style="margin-top:8px;font-size:.78rem;">` : `<input type="hidden" data-key="${s.key}" value="">`}
-          </div>
-          ${hasImg ? `<img src="${s.value}" alt="preview" style="width:80px;height:80px;object-fit:cover;border-radius:10px;border:.5px solid var(--line);">` : ''}
-        </div>`;
-    } else if(isColor){
-      inputHtml = `<input type="color" data-key="${s.key}" value="${s.value||'#3D2E22'}" ${canEdit?'':'disabled'} style="width:70px; padding:4px;">`;
-    } else if(isLong){
-      inputHtml = `<textarea data-key="${s.key}" rows="2" ${canEdit?'':'disabled'}>${s.value||''}</textarea>`;
-    } else {
-      inputHtml = `<input data-key="${s.key}" value="${s.value||''}" ${canEdit?'':'disabled'}>`;
-    }
-
+    const inputHtml = isColor
+      ? `<input type="color" data-key="${s.key}" value="${s.value||'#3D2B1F'}" ${canEdit?'':'disabled'} style="width:70px; padding:4px;">`
+      : isLong
+      ? `<textarea data-key="${s.key}" rows="2" ${canEdit?'':'disabled'}>${s.value||''}</textarea>`
+      : `<input data-key="${s.key}" value="${s.value||''}" ${canEdit?'':'disabled'}>`;
     return `<div><label>${SETTING_LABELS[s.key] || s.key}</label>${inputHtml}</div>`;
-  }).join('') + `
-    <div><button class="btn btn-primary" type="button" onclick="saveSettings()">Salvar configurações</button></div>
-    <div class="locked-note" style="display:block">
-      <b>📋 NOTA — Mudanças no banco de dados (Supabase):</b><br>
-      Para que as imagens do hero e logos funcionem, adicione as seguintes chaves na tabela <b>site_settings</b>:
-      <ul style="margin:8px 0 0 20px;line-height:1.8">
-        <li><b>hero_image_url</b> — URL da imagem de fundo do banner principal</li>
-        <li><b>logo_url</b> — URL da logo para fundo claro (header rolado)</li>
-        <li><b>logo_url_white</b> — URL da logo branca para fundo escuro (hero/footer)</li>
-      </ul>
-      Crie também a categoria <b>"Pães"</b> (slug: paes) na tabela <b>categories</b> para que os pães cadastrados apareçam automaticamente no site.
-    </div>`;
+  }).join('') + `<div><button class="btn btn-primary" type="button" onclick="saveSettings()">Salvar configurações</button></div>`;
   document.getElementById('settingsLockNote').style.display = anyLocked ? 'block' : 'none';
+  loadLogos();
+}
 
-  /* Listener para upload de imagens */
-  document.querySelectorAll('#settingsForm input[type=file][data-image-key]').forEach(inp => {
-    inp.addEventListener('change', async (e) => {
-      const file = e.target.files[0];
-      if(!file) return;
-      const key = e.target.dataset.imageKey;
-      try{
-        toast('Enviando imagem...');
-        const url = await uploadImage(file, 'settings');
-        /* Atualiza o input hidden com a URL */
-        const hiddenInput = document.querySelector(`#settingsForm [data-key="${key}"]`);
-        if(hiddenInput){
-          hiddenInput.value = url;
-          if(hiddenInput.type === 'hidden') hiddenInput.setAttribute('value', url);
-        }
-        /* Salva automaticamente no banco */
-        const { error: saveErr } = await sb.from('site_settings').update({ value: url }).eq('key', key);
-        if(saveErr){
-          /* Se a chave não existe ainda, tenta inserir */
-          const { error: insertErr } = await sb.from('site_settings').insert({ key, value: url, editable_by_loja: true });
-          if(insertErr) throw insertErr;
-        }
-        toast('Imagem salva com sucesso!');
-        loadSettings(); /* recarrega para mostrar preview */
-      }catch(err){ toast('Erro: ' + err.message); }
-    });
-  });
+/* LOGOS (header/footer) */
+async function loadLogos(){
+  const { data } = await sb.from('site_settings').select('key,value').in('key',['logo_url','logo_white']);
+  const map = {}; (data||[]).forEach(r => map[r.key]=r.value);
+  if(map.logo_url) document.getElementById('lf_color_preview').src = map.logo_url;
+  if(map.logo_white) document.getElementById('lf_white_preview').src = map.logo_white;
+}
+async function saveLogos(){
+  try{
+    const fileColor = document.getElementById('lf_color').files[0];
+    const fileWhite = document.getElementById('lf_white').files[0];
+    if(!fileColor && !fileWhite){ toast('Selecione ao menos um arquivo.'); return; }
+    if(fileColor){
+      const url = await uploadImage(fileColor, 'branding');
+      await sb.from('site_settings').update({ value: url }).eq('key','logo_url');
+      document.getElementById('lf_color_preview').src = url;
+    }
+    if(fileWhite){
+      const url = await uploadImage(fileWhite, 'branding');
+      await sb.from('site_settings').update({ value: url }).eq('key','logo_white');
+      document.getElementById('lf_white_preview').src = url;
+    }
+    toast('Logo atualizada!');
+  }catch(err){ toast('Erro: ' + err.message); }
 }
 async function saveSettings(){
   const inputs = document.querySelectorAll('#settingsForm [data-key]');
   try{
     for(const inp of inputs){
       if(inp.disabled) continue;
-      /* Pula inputs type=file (são tratados pelo upload automático) */
-      if(inp.type === 'file') continue;
-      const value = inp.value;
-      /* Tenta update primeiro, se não existir a linha faz insert */
-      const { error: updErr } = await sb.from('site_settings').update({ value }).eq('key', inp.dataset.key);
-      if(updErr || (updErr === null && updErr !== undefined)){
-        /* Verifica se atualizou alguma linha; se não, insere */
-        /* Tenta inserir caso a chave não exista */
-        const { error: insertErr } = await sb.from('site_settings').insert({ key: inp.dataset.key, value, editable_by_loja: true });
-        if(insertErr && insertErr.message !== 'duplicate key value violates unique constraint') {
-          /* Se já existe, o update acima já deve ter funcionado */
-        }
-      }
+      const { error } = await sb.from('site_settings').update({ value: inp.value }).eq('key', inp.dataset.key);
+      if(error) throw error;
     }
     toast('Configurações atualizadas!');
   }catch(err){ toast('Erro: ' + err.message); }
@@ -699,29 +722,188 @@ async function saveSettings(){
 /* PEDIDOS */
 const ORDER_STATUS = ['novo','em preparo','pronto','entregue','cancelado'];
 async function loadOrders(){
-  const { data, error } = await sb.from('orders').select('*').order('created_at', {ascending:false}).limit(100);
+  const [{ data, error }, { data: prods }] = await Promise.all([
+    sb.from('orders').select('*').order('created_at', {ascending:false}).limit(100),
+    sb.from('products').select('id,stock,available')
+  ]);
   const tbody = document.querySelector('#ordersTable tbody');
-  if(error){ tbody.innerHTML = `<tr><td colspan="6" class="empty">Erro: ${error.message}</td></tr>`; return; }
-  if(!data.length){ tbody.innerHTML = `<tr><td colspan="6" class="empty">Nenhum pedido recebido ainda.</td></tr>`; return; }
-  tbody.innerHTML = data.map(o => `
-    <tr>
+  const banner = document.getElementById('newOrdersBanner');
+  if(error){ tbody.innerHTML = `<tr><td colspan="8" class="empty">Erro: ${error.message}</td></tr>`; banner.style.display='none'; return; }
+  if(!data.length){ tbody.innerHTML = `<tr><td colspan="8" class="empty">Nenhum pedido recebido ainda.</td></tr>`; banner.style.display='none'; return; }
+
+  const prodMap = {}; (prods||[]).forEach(p => prodMap[p.id] = p);
+  const newCount = data.filter(o => o.status === 'novo').length;
+  if(newCount > 0){
+    banner.style.display = 'block';
+    banner.innerHTML = `<span class="new-dot" style="vertical-align:middle;margin-right:8px;"></span>${newCount} pedido${newCount>1?'s':''} novo${newCount>1?'s':''} aguardando atendimento`;
+  } else { banner.style.display = 'none'; }
+
+  tbody.innerHTML = data.map(o => {
+    const isNew = o.status === 'novo';
+    let hasReady = false, hasOrder = false, hasUnknown = false;
+    (o.items||[]).forEach(i => {
+      const p = prodMap[i.id];
+      if(!p){ hasUnknown = true; return; }
+      if(p.stock > 0) hasReady = true;
+      else if(p.available) hasOrder = true;
+      else hasUnknown = true;
+    });
+    let typeHtml = '';
+    if(hasReady) typeHtml += '<span class="type-pill ready">Pronta Entrega</span>';
+    if(hasOrder) typeHtml += '<span class="type-pill order">Sob Encomenda</span>';
+    if(hasUnknown && !hasReady && !hasOrder) typeHtml += '<span class="type-pill unknown">—</span>';
+    return `
+    <tr class="${isNew ? 'order-new' : ''}">
+      <td>${isNew ? '<span class="new-dot" title="Pedido novo"></span>' : ''}</td>
       <td>${new Date(o.created_at).toLocaleString('pt-BR')}</td>
       <td>${o.customer_name || '—'}<br><span class="hint">${o.customer_phone||''}</span></td>
       <td>${(o.items||[]).map(i=>`${i.qty}x ${i.name}`).join('<br>')}</td>
+      <td>${typeHtml}</td>
       <td>${o.general_note || '—'}</td>
       <td><select onchange="updateOrderStatus('${o.id}', this.value)">${ORDER_STATUS.map(s => `<option value="${s}" ${o.status===s?'selected':''}>${s}</option>`).join('')}</select></td>
       <td>${ME.role==='master' ? `<button class="btn btn-danger btn-sm" onclick="deleteOrder('${o.id}')">Excluir</button>` : ''}</td>
-    </tr>`).join('');
+    </tr>`;
+  }).join('');
 }
 async function updateOrderStatus(id, status){
   const { error } = await sb.from('orders').update({status}).eq('id', id);
-  if(error) toast('Erro: ' + error.message); else toast('Status atualizado.');
+  if(error) toast('Erro: ' + error.message); else { toast('Status atualizado.'); loadOrders(); }
 }
 async function deleteOrder(id){
   if(!confirm('Excluir este pedido do histórico?')) return;
   const { error } = await sb.from('orders').delete().eq('id', id);
   if(error){ toast('Erro: '+error.message); return; }
   toast('Pedido excluído.'); loadOrders();
+}
+
+/* PDV — VENDAS MANUAIS */
+let pdvCart = [];
+let pdvPayment = null;
+let PDV_PRODUCTS = [];
+const PAY_LABELS = {dinheiro:'Dinheiro', pix:'PIX', credito:'Crédito (POS)', debito:'Débito (POS)'};
+
+async function loadPDV(){
+  const { data, error } = await sb.from('products').select('id,name,price,stock,available').eq('active', true).order('name');
+  PDV_PRODUCTS = error ? [] : (data || []);
+  const sel = document.getElementById('pdv_product');
+  sel.innerHTML = PDV_PRODUCTS.map(p => `<option value="${p.id}">${p.name} — ${money(p.price)} (estoque: ${p.stock ?? 0})</option>`).join('');
+  sel.onchange = pdvUpdateStockHint;
+  pdvCart = []; pdvPayment = null;
+  document.getElementById('pdv_customer').value = '';
+  document.getElementById('pdv_note').value = '';
+  document.querySelectorAll('.pay-btn').forEach(b => b.classList.remove('active'));
+  pdvUpdateStockHint();
+  renderPdvCart();
+  loadPdvSales();
+}
+function pdvUpdateStockHint(){
+  const id = document.getElementById('pdv_product').value;
+  const p = PDV_PRODUCTS.find(x => x.id === id);
+  document.getElementById('pdv_stock_hint').textContent = p ? `Estoque atual: ${p.stock ?? 0} un.` : '';
+}
+function pdvAddItem(){
+  const id = document.getElementById('pdv_product').value;
+  const qty = parseInt(document.getElementById('pdv_qty').value, 10) || 1;
+  const p = PDV_PRODUCTS.find(x => x.id === id);
+  if(!p){ toast('Selecione um produto.'); return; }
+  const existing = pdvCart.find(i => i.id === id);
+  if(existing) existing.qty += qty;
+  else pdvCart.push({ id: p.id, name: p.name, price: p.price, qty });
+  document.getElementById('pdv_qty').value = 1;
+  renderPdvCart();
+}
+function pdvChangeQty(id, delta){
+  const item = pdvCart.find(i => i.id === id);
+  if(!item) return;
+  item.qty += delta;
+  if(item.qty <= 0) pdvCart = pdvCart.filter(i => i.id !== id);
+  renderPdvCart();
+}
+function pdvRemoveItem(id){ pdvCart = pdvCart.filter(i => i.id !== id); renderPdvCart(); }
+function renderPdvCart(){
+  const list = document.getElementById('pdvCartList');
+  const empty = document.getElementById('pdvCartEmpty');
+  if(!pdvCart.length){
+    list.innerHTML = '';
+    empty.style.display = 'block';
+    document.getElementById('pdvTotal').textContent = money(0);
+    return;
+  }
+  empty.style.display = 'none';
+  list.innerHTML = pdvCart.map(i => `
+    <div class="pdv-item-row">
+      <span>${i.qty}x ${i.name} <span class="hint">(${money(i.price)} un.)</span></span>
+      <span class="pdv-item-controls">
+        <b>${money(i.price * i.qty)}</b>
+        <button class="btn btn-outline btn-sm" type="button" onclick="pdvChangeQty('${i.id}',-1)">−</button>
+        <button class="btn btn-outline btn-sm" type="button" onclick="pdvChangeQty('${i.id}',1)">+</button>
+        <button class="btn btn-danger btn-sm" type="button" onclick="pdvRemoveItem('${i.id}')">remover</button>
+      </span>
+    </div>`).join('');
+  const total = pdvCart.reduce((s,i) => s + i.price * i.qty, 0);
+  document.getElementById('pdvTotal').textContent = money(total);
+}
+function pdvSetPayment(val){
+  pdvPayment = val;
+  document.querySelectorAll('.pay-btn').forEach(b => b.classList.toggle('active', b.dataset.val === val));
+}
+function pdvResetCart(){
+  pdvCart = []; pdvPayment = null;
+  document.getElementById('pdv_customer').value = '';
+  document.getElementById('pdv_note').value = '';
+  document.querySelectorAll('.pay-btn').forEach(b => b.classList.remove('active'));
+  renderPdvCart();
+}
+async function pdvFinalizeSale(){
+  if(!pdvCart.length){ toast('Adicione ao menos um item.'); return; }
+  if(!pdvPayment){ toast('Selecione a forma de pagamento.'); return; }
+  const total = pdvCart.reduce((s,i) => s + i.price * i.qty, 0);
+  const payload = {
+    customer_name: document.getElementById('pdv_customer').value.trim() || null,
+    items: pdvCart.map(i => ({ id: i.id, name: i.name, price: i.price, qty: i.qty })),
+    payment_method: pdvPayment,
+    total,
+    note: document.getElementById('pdv_note').value.trim() || null,
+    status: 'finalizada',
+    created_by: ME.id
+  };
+  const { error } = await sb.from('pdv_sales').insert(payload);
+  if(error){ toast('Erro: ' + error.message); return; }
+  toast('Venda registrada — estoque atualizado!');
+  pdvResetCart();
+  loadPDV();
+}
+async function loadPdvSales(){
+  const { data, error } = await sb.from('pdv_sales').select('*').order('created_at', {ascending:false}).limit(100);
+  const tbody = document.querySelector('#pdvSalesTable tbody');
+  if(error){ tbody.innerHTML = `<tr><td colspan="7" class="empty">Erro: ${error.message}</td></tr>`; return; }
+  if(!data.length){ tbody.innerHTML = `<tr><td colspan="7" class="empty">Nenhuma venda lançada ainda.</td></tr>`; return; }
+  tbody.innerHTML = data.map(s => `
+    <tr>
+      <td>${new Date(s.created_at).toLocaleString('pt-BR')}</td>
+      <td>${s.customer_name || '—'}</td>
+      <td>${(s.items||[]).map(i=>`${i.qty}x ${i.name}`).join('<br>')}</td>
+      <td>${PAY_LABELS[s.payment_method] || s.payment_method}</td>
+      <td>${money(s.total)}</td>
+      <td><span class="pill ${s.status==='finalizada' ? 'on' : 'off'}">${s.status}</span></td>
+      <td>${s.status==='finalizada'
+        ? `<button class="btn btn-danger btn-sm" onclick="pdvCancelSale('${s.id}')">Cancelar</button>`
+        : (ME.role==='master' ? `<button class="btn btn-danger btn-sm" onclick="pdvDeleteSale('${s.id}')">Excluir</button>` : '')}</td>
+    </tr>`).join('');
+}
+async function pdvCancelSale(id){
+  if(!confirm('Cancelar esta venda? O estoque dos itens será devolvido.')) return;
+  const { error } = await sb.from('pdv_sales').update({status:'cancelada'}).eq('id', id);
+  if(error){ toast('Erro: ' + error.message); return; }
+  toast('Venda cancelada — estoque devolvido.');
+  loadPdvSales();
+}
+async function pdvDeleteSale(id){
+  if(!confirm('Excluir definitivamente esta venda do histórico?')) return;
+  const { error } = await sb.from('pdv_sales').delete().eq('id', id);
+  if(error){ toast('Erro: ' + error.message); return; }
+  toast('Venda excluída.');
+  loadPdvSales();
 }
 
 /* USUÁRIOS */
